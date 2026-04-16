@@ -21,6 +21,7 @@ class CreateAdminsTable extends Migration
             $table->tinyInteger('del_flg')
                   ->default(0)
                   ->comment('0=有効, 1=削除');
+            $table->rememberToken(); //ログイン状態を保持する
             $table->timestamps();
         });
     }
