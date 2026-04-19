@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Carbon\Carbon; // Carbon::now()のuse宣言
 use Illuminate\Support\Facades\DB; // DB::table(...)のuse宣言
-use App\Models\User;
+use App\User;
 
 class PetSeeder extends Seeder
 {
@@ -14,7 +14,7 @@ class PetSeeder extends Seeder
      */
     public function run()
     {
-        User::first(); // Usersテーブルから最初の1件を取得
+        $user = User::first(); // Usersテーブルから最初の1件を取得
 
         $params = [
             'name' => 'くうさん',

@@ -3,7 +3,6 @@
 use Illuminate\Database\Seeder;
 use Carbon\Carbon; // Carbon::now()のuse宣言
 use Illuminate\Support\Facades\DB; // DB::table(...)のuse宣言
-use App\Models\Pet;
 
 class VisitSeeder extends Seeder
 {
@@ -14,7 +13,7 @@ class VisitSeeder extends Seeder
      */
     public function run()
     {
-        $pet = Pet::first(); // Petsテーブルから最初の1件を取得
+        $pet = DB::table('pets')->first(); // Petsテーブルから最初の1件を取得
 
         $params = [
             'visit_date' => '2026-04-18',
