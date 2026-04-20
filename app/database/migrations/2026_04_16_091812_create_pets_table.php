@@ -17,7 +17,8 @@ class CreatePetsTable extends Migration
             $table->increments('id');
             $table->string('name', 50);
             $table->date('birth_date');
-            $table->tinyInteger('gender');
+            $table->tinyInteger('gender')
+                  ->comment('0=女の子, 1=男の子');
             $table->string('profile_image', 255)->nullable();
             $table->tinyInteger('del_flg')
                   ->default(0)
