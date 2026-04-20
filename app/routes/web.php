@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Route; //Route::get(...) の宣言
+
+use App\Http\Controllers\DisplayController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +14,4 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [DisplayController::class, 'index']);
