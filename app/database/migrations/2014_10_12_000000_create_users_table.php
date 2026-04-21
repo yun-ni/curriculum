@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name', 50);
             $table->string('email', 255)->unique();
-            $table->string('password', 225);
+            $table->string('password', 255);
             $table->tinyInteger('del_flg')
                   ->default(0)
                   ->comment('0=有効, 1=削除');
