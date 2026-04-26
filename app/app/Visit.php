@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Visit extends Model
 {
-    //
+    public function pet() {
+        return $this->belongsTo('App\Pet', 'pet_id', 'id');
+    }
 }
