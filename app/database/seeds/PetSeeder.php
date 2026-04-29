@@ -20,6 +20,7 @@ class PetSeeder extends Seeder
             'name' => 'くうさん',
             'birth_date' => '2021-06-25',
             'gender' => 1, // TINYINT型
+            'profile_image' => 'images/kuusan.png',
             'user_id' => $user->id,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
