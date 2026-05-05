@@ -15,3 +15,5 @@ use App\Http\Controllers\DisplayController;
 */
 
 Route::get('/', [DisplayController::class, 'index']);
+Route::get('/pet/{id}/index', [DisplayController::class, 'petIndex'])->name('pet.index');
+// Route::get('URLのパス', [コントローラークラス, 'メソッド名'])->name('ルート名');

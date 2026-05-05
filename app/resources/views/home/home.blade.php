@@ -9,15 +9,15 @@
                             <div class = "p-2  m-4 border bg-light h-100 d-flex flex-column align-items-center justify-content-center" 
                                  style="aspect-ratio: 1 / 1;">
                                 <div class="text-center"> {{-- 画像も中央寄せ --}}
-                                        <a href="">
+                                    <a href="{{ route('pet.index', ['id' => $pet['id']]) }}">
                                         <img src="{{ asset($pet['profile_image']) }}" 
                                         alt="プロフィール画像" 
                                         width="200" height="200" 
                                         style="border-radius: 50%; object-fit: cover;">
+                                        <div class="text-center">
+                                            <p>{{ $pet['name'] }}</p>
+                                        </div> 
                                     </a>
-                                </div>
-                                <div class="text-center">
-                                    <p>{{ $pet['name'] }}</p>
                                 </div>
                             </div>
                         </div>
