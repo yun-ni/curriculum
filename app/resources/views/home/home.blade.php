@@ -26,7 +26,7 @@
                     <div class = "col-md-4 mb-4">
                         <div class = "p-3 m-4 border bg-light h-100 d-flex flex-column align-items-center justify-content-center" 
                              style="aspect-ratio: 1 / 1;">
-                        <a href="" class="text-decoration-none text-center">
+                        <a href="{{ route('create.pet') }}" class="text-decoration-none text-center">
                             <p class="mb-0">＋ペットを追加</p>
                         </a>
                         </div>

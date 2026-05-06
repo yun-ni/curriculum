@@ -18,7 +18,6 @@ class DisplayController extends Controller
         // モデルのインスタンスを生成し、変数visitに代入
         $user = new User;
         $pet = new Pet;
-        $pets = Pet::with('health')->get();
         // $health = new Health;
         // $visit = new Visit;
 

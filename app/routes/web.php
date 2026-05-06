@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route; //Route::get(...) の宣言
 
 use App\Http\Controllers\DisplayController;
+use App\Http\Controllers\RegistrationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,4 +17,6 @@ use App\Http\Controllers\DisplayController;
 
 Route::get('/', [DisplayController::class, 'index']);
 Route::get('/pet/{id}/index', [DisplayController::class, 'petIndex'])->name('pet.index');
+Route::get('/create_pet', [RegistrationController::class, 'createPetForm'])->name('create.pet');
+Route::post('pets/create', [RegistrationController::class, 'createPet']);
 // Route::get('URLのパス', [コントローラークラス, 'メソッド名'])->name('ルート名');
