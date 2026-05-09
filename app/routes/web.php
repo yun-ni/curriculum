@@ -17,8 +17,8 @@ use App\Http\Controllers\RegistrationController;
 
 Route::get('/', [DisplayController::class, 'index']);
 Route::get('/pet/{id}/index', [DisplayController::class, 'petIndex'])->name('pet.index'); //対象ペットの記録一覧
-Route::get('/create_pet', [RegistrationController::class, 'createPetForm'])->name('create.pet');
-Route::post('pets/create', [RegistrationController::class, 'createPet']);
-Route::get('health/create', [RegistrationController::class, 'createHealth'])->name('create.health'); //体調記録作成
-Route::get('visits/create', [RegistrationController::class, 'createVisit'])->name('create.visit'); //通院記録作成
+Route::get('/pets/pet_form', [RegistrationController::class, 'createPetForm'])->name('create.pet.form');
+Route::post('/pets/pet_form', [RegistrationController::class, 'createPet'])->name('create.pet');
+Route::get('/health/health_form', [RegistrationController::class, 'createHealth'])->name('create.health'); //体調記録作成
+Route::get('/visits/visit_form', [RegistrationController::class, 'createVisit'])->name('create.visit'); //通院記録作成
 // Route::get('URLのパス', [コントローラークラス, 'メソッド名'])->name('ルート名');

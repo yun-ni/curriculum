@@ -14,14 +14,14 @@ use App\Http\Requests\CreateData;
 class RegistrationController extends Controller
 {
     public function createPetForm() {
-        return view('pets.create');
+        return view('pets.pet_form');
     }
 
     public function createHealth() {
-        return view('healths.create');
+        return view('healths.health_form');
     }
 
     public function createVisit() {
-        return view('visits.create');
+        return view('visits.visit_form');
     }
 }
