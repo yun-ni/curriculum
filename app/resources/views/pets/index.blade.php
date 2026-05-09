@@ -21,7 +21,7 @@
                 <div class='text-center'>体調記録</div>
             </div>
             <div>
-                <a href="">+体調を記録</a>
+                <a href="{{ route('create.health') }}">+体調を記録</a>
             </div>
             <div class="">
                 <table>
@@ -54,7 +54,7 @@
                 <div class='text-center'>通院記録</div>
             </div>
             <div>
-                <a href="">+通院を記録</a>
+                <a href="{{ route('create.visit') }}">+通院を記録</a>
             </div>
             <div class="">
                 <table>

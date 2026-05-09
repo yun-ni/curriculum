@@ -5,7 +5,7 @@
              style="width: 50%; aspect-ratio: 1 / 1;">
             <x-slot name="header">
                 <h2 class="p-2  m-4 align-items-center font-semibold text-xl text-gray-800 leading-tight">
-                    {{ __('体調記録') }}
+                    {{ __('通院記録') }}
                 </h2>
             </x-slot>     
             <p>日付</p>

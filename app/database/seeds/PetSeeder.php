@@ -20,6 +20,7 @@ class PetSeeder extends Seeder
             [
                 'name' => 'くうさん',
                 'birth_date' => '2021-06-25',
+                'breed' => 'トイプードル',
                 'gender' => 1, // TINYINT型
                 'profile_image' => 'images/kuusan.png',
                 'user_id' => $user->id,
@@ -29,6 +30,7 @@ class PetSeeder extends Seeder
             [
                 'name' => 'ぱぐぞう',
                 'birth_date' => '2022-05-20',
+                'breed' => 'パグ',
                 'gender' => 1, // TINYINT型
                 'profile_image' => 'images/ぱぐぞう.png',
                 'user_id' => $user->id,
@@ -37,6 +39,7 @@ class PetSeeder extends Seeder
             ],
             [
                 'name' => 'モフリシャス',
+                'breed' => 'ミックス',
                 'birth_date' => '2023-01-01',
                 'gender' => 1, // TINYINT型
                 'profile_image' => 'images/モフリシャス.png',

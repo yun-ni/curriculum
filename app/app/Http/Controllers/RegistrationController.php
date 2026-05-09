@@ -16,4 +16,12 @@ class RegistrationController extends Controller
     public function createPetForm() {
         return view('pets.create');
     }
+
+    public function createHealth() {
+        return view('healths.create');
+    }
+
+    public function createVisit() {
+        return view('visits.create');
+    }
 }
