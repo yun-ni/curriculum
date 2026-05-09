@@ -54,7 +54,7 @@
                         <div class="card-body">
                             <h5 class="card-title">通院記録</h5>
                             <div class=" text-left">
-                                <a href="{{ route('create.health') }}">+通院を記録</a>
+                                <a href="{{ route('create.visit') }}">+通院を記録</a>
                             </div>
                             <table class="table">
                                 <thead>
