@@ -1,4 +1,4 @@
-@extends('layouts.layout') <!-- 使用するテンプレートの宣言/('一つ上のディレクトリ.｢.blade.phpの前のファイル名｣') -->
+@extends('layouts.layout')
 @section('content')
     <div style="height: calc(100vh - 56px);" class="d-flex align-items-center justify-content-center">
         <div class="border bg-light d-flex flex-column align-items-center justify-content-center"
@@ -44,18 +44,18 @@
                     </div>
                     <div>
                         <label for="name" class="mb-1">ペットの名前</label>
-                            <input type='text' class='form-control' name='name' value="{{ old('name') }}"/>
+                        <input type='text' class='form-control' name='name' value="{{ old('name') }}"/>
                         <label for="birth_date" class="mb-1">誕生日</label>
-                            <input type='date' class='form-control' name='birth_date' id='birth_date' value="{{ old('birth_date') }}"/>
+                        <input type='date' class='form-control' name='birth_date' id='birth_date' value="{{ old('birth_date') }}"/>
                         <label for="breed" class="mb-1">犬種</label>
-                            <input type='text' class='form-control' name='breed' value="{{ old('breed') }}"/>
+                        <input type='text' class='form-control' name='breed' value="{{ old('breed') }}"/>
                         <label for="gender" class="mb-1">性別</label>
-                            <select name="gender" class="form-control">
-                                <option value="0" {{ old('gender') === '0'? 'selected' : '' }}>女の子</option>
-                                <option value="1" {{ old('gender') === '1'? 'selected' : '' }}>男の子</option>
-                            </select>
+                        <select name="gender" class="form-control">
+                            <option value="0" {{ old('gender') === '0'? 'selected' : '' }}>女の子</option>
+                            <option value="1" {{ old('gender') === '1'? 'selected' : '' }}>男の子</option>
+                        </select>
                         <div class='row justify-content-center'>
-                                <button type='submit' class='btn btn-primary w-25 mt-3'>登録</button>
+                            <button type='submit' class='btn btn-primary w-25 mt-3'>登録</button>
                         </div> 
                     </div>
                 </form>

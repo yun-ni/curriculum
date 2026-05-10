@@ -17,6 +17,18 @@ class RegistrationController extends Controller
         return view('pets.pet_form');
     }
 
+    public function createPet(Request $request) { //POSTデータの取得にはRequestクラスを使用
+        $pet = new Pet;
+
+        $pet->name = $request->name;
+        $pet->birth_date = $request->birth_date;
+        $pet->breed = $request->breed;
+        $pet->gender = $request->gender;
+        $pet->profile_image = $request->profile_image;
+
+        $pet->save();
+    }
+
     public function createHealth() {
         return view('healths.health_form');
     }
