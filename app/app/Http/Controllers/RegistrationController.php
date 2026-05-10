@@ -20,6 +20,8 @@ class RegistrationController extends Controller
     public function createPet(Request $request) { //POSTデータの取得にはRequestクラスを使用
         $pet = new Pet;
 
+        $pet->user_id = 1;
+        //$pet->user_id = $request->user_id;
         $pet->name = $request->name;
         $pet->birth_date = $request->birth_date;
         $pet->breed = $request->breed;
