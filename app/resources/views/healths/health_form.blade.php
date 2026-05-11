@@ -7,11 +7,9 @@
                 <form action="{{ route('create.pet', ['redirect' => 'home']) }}" method="post">
                     @csrf
                     <div>
-                        <x-slot name="header">
-                            <h2 class="p-2  m-2 align-items-center font-semibold text-center text-gray-800 leading-tight">
-                                {{ __('体調記録') }}
-                            </h2>
-                        </x-slot> 
+                        <h2 class="p-2  m-2 align-items-center font-semibold text-center text-gray-800 leading-tight">
+                            {{ __('体調記録') }}
+                        </h2>
                     </div>
                     <label for="health_date" class="mb-1">日付</label>
                         <input type='date' class='form-control' style="width: 300px;" name='health_date' 

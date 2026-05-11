@@ -5,7 +5,10 @@
         <div class="container-fluid p-0 text-center">
             <div class="row">
                 <div class="col">
-                    <img src="{{ asset('images/'. $pet->profile_image) }}" alt="プロフィール画像">
+                    <img src="{{ asset('images/'. $pet['profile_image']) }}"                    
+                         alt="プロフィール画像" 
+                         width="200" height="200" 
+                         style="border-radius: 50%; object-fit: cover;">
                 </div>
                 <div class="col">
                     <p>{{ $pet->name }}</p>

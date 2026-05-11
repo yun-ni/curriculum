@@ -4,14 +4,12 @@
         <div class="border bg-light d-flex flex-column align-items-center justify-content-center"
              style="width: 50%; aspect-ratio: 1 / 1;">
             <div>
-                <form action="{{ route('create.pet', ['redirect' => 'home']) }}" method="post">
+                <form action="{{ route('create.pet', ['redirect' => 'home']) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div>
-                        <x-slot name="header">
-                            <h2 class="p-2  m-1 align-items-center font-semibold text-center text-gray-800 leading-tight">
-                                {{ __('プロフィール追加') }}
-                            </h2>
-                        </x-slot>
+                        <h2 class="p-2  m-1 align-items-center font-semibold text-center text-gray-800 leading-tight">
+                            {{ __('プロフィール追加') }}
+                        </h2>
                     </div>
                     <style>
                         .image-container .edit-button {
@@ -36,10 +34,17 @@
                              style="position: relative; display: inline-block;">
                             <img src="{{ asset('images/no_image.png') }}"
                                  alt="プロフィール画像"
+                                 {{-- profile-preview :プレビュー表示 --}}
+                                 id="profile-preview"
                                  width="150"
                                  height="150"
                                  style="border-radius: 50%; object-fit: cover;">
-                            <button type="button" class="edit-button">編集</button>
+                            {{-- ファイル選択 input (画像のみ許可) display: none;で非表示 --}}
+                            <input type='file' class='' name='profile_image' id='profile_image' value="{{  old('profile_image') }}" 
+                                    accept="image/*" onchange="previewImage(this)" style="display: none;"/>
+                            <button type="button" class="edit-button" onclick="document.getElementById('profile_image').click()">
+                                編集
+                            </button>
                         </div>
                     </div>
                     <div>
@@ -59,6 +64,16 @@
                         </div> 
                     </div>
                 </form>
+                <!-- プロフィール画像用 -->
+                <script>
+                    function previewImage(obj) {
+                        const fileReader = new FileReader();
+                        fileReader.onload = (function() {
+                            document.getElementById('profile-preview').src = fileReader.result;
+                        });
+                        fileReader.readAsDataURL(obj.files[0]);
+                    }
+                </script>
             </div>
         </div>
     </div>
