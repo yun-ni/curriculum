@@ -1,23 +1,32 @@
 @extends('layouts.layout') <!-- 使用するテンプレートの宣言/('一つ上のディレクトリ.｢.blade.phpの前のファイル名｣') -->
 @section('content')
-<main class="py-4">
-    <div class="row justify-conten-around">
-        <div class="container-fluid p-0 text-center">
+<main class="py-2 bg-primary">
+        <!-- bg-danger：赤くしてる -->
+        <div class="container-fluid text-center bg-danger">
             <div class="row">
-                <div class="col">
-                    <img src="{{ asset('images/'. $pet['profile_image']) }}"                    
-                         alt="プロフィール画像" 
-                         width="200" height="200" 
-                         style="border-radius: 50%; object-fit: cover;">
-                </div>
-                <div class="col">
-                    <p>{{ $pet->name }}</p>
+                <!-- bg-primary：青くしてる -->
+                <div class="col py-2 bg-primary">
+                    <!-- bg-light：薄い色 -->
+                    <div class="d-flex align-items-center bg-light" 
+                         style="height: 26vh; padding-left: 80px; border-radius: .25rem;">
+                        <span class="align-baseline">
+                            <img src="{{ asset('images/'. $pet['profile_image']) }}"                    
+                                alt="プロフィール画像" 
+                                width="140" height="140" 
+                                style="border-radius: 50%; object-fit: cover;">
+                        </span>
+                        <span class="align-baseline pl-5">
+                            {{ $pet->name }}
+                        </span>
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-5">
+                <!-- bg-primary：青くしてる -->
+                <div class="col-sm-5 pr-1 bg-primary">                   
                     <div class="card">
-                        <div class="card-body">
+                        <!-- bg-light：薄い色 -->
+                        <div class="card-body bg-light">
                             <h5 class="card-title">体調記録</h5>
                             <div class=" text-left">
                                 <a href="{{ route('create.health') }}">+体調を記録</a>
@@ -49,9 +58,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-7">
+                <!-- bg-primary：青くしてる -->
+                <div class="col-sm-7 pl-1 bg-primary">                   
                     <div class="card">
-                        <div class="card-body">
+                        <!-- bg-light：薄い色 -->
+                        <div class="card-body bg-light">
                             <h5 class="card-title">通院記録</h5>
                             <div class=" text-left">
                                 <a href="{{ route('create.visit') }}">+通院を記録</a>
@@ -86,6 +97,5 @@
                 </div>
             </div>
         </div>
-    </div>
 </main>
 @endsection
