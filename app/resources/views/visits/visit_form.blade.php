@@ -1,58 +1,81 @@
 @extends('layouts.layout') <!-- 使用するテンプレートの宣言/('一つ上のディレクトリ.｢.blade.phpの前のファイル名｣') -->
 @section('content')
-    <div style="height: calc(100vh - 56px);" class="d-flex align-items-center justify-content-center">
+    <div style="height: calc(97.2vh - 56px);" class="d-flex align-items-center justify-content-center">
         <div class="border bg-light d-flex flex-column align-items-center justify-content-center"
-             style="width: 50%; aspect-ratio: 1 / 1;">
-            <div>
-                <form action="{{ route('create.pet', ['redirect' => 'home']) }}" method="post">
-                    @csrf
-                    <div>
-                        <h2 class="p-2  m-2 align-items-center font-semibold text-center text-gray-800 leading-tight">
-                            {{ __('通院記録') }}
-                        </h2> 
+             style="width: 70%; height: 99%;">
+            <form action="{{ route('create.visit') }}" method="post">
+                @csrf
+                <h2 class="p-2  mt-3 align-items-center font-semibold text-center text-gray-800 leading-tight">
+                    {{ __('通院記録') }}
+                </h2>
+                <style>
+                    /* 横幅 */
+                    .form-control {
+                        width: 320px;
+                    }
+                    /* 地図のサイズを指定 */
+                    #map {
+                        height: 170px;
+                        width: 300px;
+                        /* 上下は0、左右は自動 */
+                        margin: 0 auto;
+                    }
+                </style> 
+                <div class="row">
+                    <!-- 左側 -->
+                    <div class="col-md-6">
+                        <label for="visit_date" class="ml-2 mt-2 mb-0">日付</label>
+                        <input type="date" class="form-control" name="visit_date" 
+                                id="visit_date" value="{{ old('visit_date') }}"/>
+                        <label for="has_visit" class="ml-2 mt-2 mb-0">通院</label>
+                        <select name="has_visit" class="form-control">
+                            <option value="0" {{ old('has_visit') === '0'? 'selected' : '' }}>あり</option>
+                            <option value="1" {{ old('has_visit') === '1'? 'selected' : '' }}>なし</option>
+                        </select>
+                        <label for="hospital_name" class="ml-2 mt-2 mb-0">動物病院名
+                            <button type="button" id="search-button" 
+                                    class="btn btn-outline-primary ml-2 btn-sm">
+                                場所を表示
+                            </button>
+                        </label>                        
+                            <input type="text" class="form-control" name="hospital_name"
+                                    id="hospital_name" value="{{ old('hospital_name') }}" />
+                        
+                        {{-- 地図を表示する領域 --}}
+                        <div id="map" class="mt-3"></div>
+
+                        {{-- Google Maps APIの読み込み --}}
+                        <script async
+                                src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&loading=async&callback=initMap">
+                        </script>
+                        <script src="{{ asset('js/map.js') }}"></script>
                     </div>
-                    <label for="health_date" class="mb-1">日付</label>
-                        <input type='date' class='form-control text-center' style="width: 350px;" name='health_date' 
-                                 id='health_date' value="{{ old('health_date') }}"/>
-                    <label for="energy" class="mb-1">元気</label>
-                    <style>
-                        .radio-group label {
-                            margin-right: 15px; /* 選択肢の間のスペース */
-                            cursor: pointer;
-                        }
-                    </style>
-                    <div class='form-control radio-group text-center'>
-                        <label><input type="radio" name='energy' value='2' {{ old('energy') == '2' ? 'checked' : '' }} /> ◎</label>
-                        <label><input type="radio" name='energy' value='1' {{ old('energy') == '1' ? 'checked' : '' }} /> ◯</label>
-                        <label><input type="radio" name='energy' value='0' {{ old('energy') == '0' ? 'checked' : '' }} /> △</label>
-                        <label><input type="radio" name='energy' value='-1' {{ old('energy') == '-1' ? 'checked' : '' }} /> ✕</label>
+                    <!-- 右側 -->
+                    <div class="col-md-6">
+                        <label for="symptom" class="ml-2 mt-2 mb-0">症状</label>
+                        <input type="text" class="form-control" name="symptom"
+                                id="symptom" value="{{ old('symptom') }}"/>
+                        <label for="medication" class="ml-2 mt-2 mb-0">投薬</label>
+                        <input type="text" class="form-control" name="medication"
+                                id="medication" value="{{ old('medication') }}"/>
+                        <label for="prescription" class="ml-2 mt-2 mb-0">処方薬</label>
+                        <input type="text" class="form-control" name="prescription"
+                                id="prescription" value="{{ old('prescription') }}"/>                
+                        <label for="weightmedical_fees" class="ml-2 mt-2 mb-0">医療費</label>
+                        <div style="position: relative;">
+                            <input type="number" step="0" min="0" class='form-control' name="medical_fees" value="{{ old('medical_fees') }}"/>
+                            <span style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); color: #666;">円</span>
+                        </div>
+                        <label for="memo" class="ml-2 mt-2 mb-0">メモ</label>
+                        <input type="text" class="form-control" style="height: 100px;"
+                               name="memo" id="memo" value="{{ old('memo') }}"/>
                     </div>
-                    <label for="appetite" class="mb-1">食欲</label>
-                    <div class='form-control radio-group text-center'>
-                        <label><input type="radio" name='appetite' value='2' {{ old('appetite') == '2' ? 'checked' : '' }} /> ◎</label>
-                        <label><input type="radio" name='appetite' value='1' {{ old('appetite') == '1' ? 'checked' : '' }} /> ◯</label>
-                        <label><input type="radio" name='appetite' value='0' {{ old('appetite') == '0' ? 'checked' : '' }} /> △</label>
-                        <label><input type="radio" name='appetite' value='-1' {{ old('appetite') == '-1' ? 'checked' : '' }} /> ✕</label>
-                    </div>
-                    <label for="toilets" class="mb-1">トイレ</label>
-                    <div class='form-control radio-group text-center'>
-                        <label><input type="radio" name='toilets' value='2' {{ old('toilets') == '2' ? 'checked' : '' }} /> ◎</label>
-                        <label><input type="radio" name='toilets' value='1' {{ old('toilets') == '1' ? 'checked' : '' }} /> ◯</label>
-                        <label><input type="radio" name='toilets' value='0' {{ old('toilets') == '0' ? 'checked' : '' }} /> △</label>
-                        <label><input type="radio" name='toilets' value='-1' {{ old('toilets') == '-1' ? 'checked' : '' }} /> ✕</label>
-                    </div>
-                    <label for="walk_minutes" class="mb-1">散歩</label>
-                        <input type="time" pattern="\d*" class='form-control text-center' name='walk_minutes' value="{{ old('walk_minutes') }}" />
-                    <label for="weight" class="mb-1">体重</label>
-                    <div style="position: relative;">
-                        <input type="number" step="0.01" min="0" class='form-control text-center' name='weight' value="{{ old('weight') }}"/>
-                        <span style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #666;">kg</span>
-                    </div>
-                    <div class='row justify-content-center'>
-                        <button type='submit' class='btn btn-primary w-25 mt-3 mb-3'>登録</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+
+                <div class='row justify-content-center'>
+                    <button type='submit' class='btn btn-primary w-25 mt-2 mb-4'>登録</button>
+                </div>
+            </form>
         </div>
     </div>
 @endsection

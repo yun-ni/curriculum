@@ -1,8 +1,8 @@
 @extends('layouts.layout')
 @section('content')
-    <div style="height: calc(100vh - 56px);" class="d-flex align-items-center justify-content-center">
+    <div style="height: calc(97.2vh - 56px);" class="d-flex align-items-center justify-content-center">
         <div class="border bg-light d-flex flex-column align-items-center justify-content-center"
-             style="width: 50%; aspect-ratio: 1 / 1;">
+             style="width: 50%; height: 99%;">
             <div>
                 <form action="{{ route('create.pet', ['redirect' => 'home']) }}" method="post" enctype="multipart/form-data">
                     @csrf
@@ -48,13 +48,13 @@
                         </div>
                     </div>
                     <div>
-                        <label for="name" class="mb-1">ペットの名前</label>
+                        <label for="name" class="ml-2 mt-2 mb-0">ペットの名前</label>
                         <input type='text' class='form-control' name='name' value="{{ old('name') }}"/>
-                        <label for="birth_date" class="mb-1">誕生日</label>
+                        <label for="birth_date" class="ml-2 mt-2 mb-0">誕生日</label>
                         <input type='date' class='form-control' name='birth_date' id='birth_date' value="{{ old('birth_date') }}"/>
-                        <label for="breed" class="mb-1">犬種</label>
+                        <label for="breed" class="ml-2 mt-2 mb-0">犬種</label>
                         <input type='text' class='form-control' name='breed' value="{{ old('breed') }}"/>
-                        <label for="gender" class="mb-1">性別</label>
+                        <label for="gender" class="ml-2 mt-2 mb-0">性別</label>
                         <select name="gender" class="form-control">
                             <option value="0" {{ old('gender') === '0'? 'selected' : '' }}>女の子</option>
                             <option value="1" {{ old('gender') === '1'? 'selected' : '' }}>男の子</option>

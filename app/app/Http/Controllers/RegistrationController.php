@@ -43,11 +43,50 @@ class RegistrationController extends Controller
         return redirect()->route('pet.index', ['id' => $pet->id]);
     }
 
-    public function createHealth() {
+    public function createHealthForm() {
         return view('healths.health_form');
     }
 
-    public function createVisit() {
+    public function createHealth(Request $request) {
+        $health = new Health;
+
+        $health->pet_id = 1;
+        $health->health_date = $request->health_date;
+        $health->energy = $request->energy;
+        $health->appetite = $request->appetite;
+        $health->toilets = $request->toilets;
+        $health->walk_minutes = $request->walk_minutes;
+        $health->weight = $request->weight;
+
+        $health->save();
+
+        return redirect()->route('pet.index', ['id' => $health->pet_id]);
+    }
+
+    public function createVisitForm() {
         return view('visits.visit_form');
+    }
+
+    public function createVisit(Request $request) {
+        $visit = new Visit;
+
+        $visit->pet_id = 1;
+        $visit->visit_date = $request->visit_date;
+        $visit->has_visit = $request->has_visit;
+        $visit->hospital_name = $request->hospital_name;
+        //地図用 $visit->=$request->;
+        $visit->symptom = $request->symptom;
+        $visit->medication = $request->medication;
+        $visit->prescription = $request->prescription;
+        $visit->medical_fees = $request->medical_fees;
+        $visit->memo = $request->memo;
+
+        $visit->save();
+
+        return redirect()->route('pet.index', ['id' => $visit->pet_id]);
+    }
+
+    public function initMap() {
+
     }
 }
