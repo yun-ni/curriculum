@@ -37,6 +37,35 @@
                 <i class="bi bi-clipboard-heart" style="font-size: 2rem;"></i>
                 ペットケア＋
             </a>
+            <div class="my-navbar-control">
+                @if (Auth::check())
+                <span class="my-navbar-item">
+                    <i class="bi bi-person-circle"></i>
+                    {{ Auth::user()->name }}
+                </span>
+                /                
+                <a href="#" id="logout" class="mt-navbar-item">ログアウト</a>
+                <!-- ログアウトはPOSTメソッドで送信する必要がある -->
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+                </form>
+                <script>
+                    document.getElementById('logout').addEventListener('click', function(event) {
+                        event.preventDefault();
+                        document.getElementById('logout-form').submit();
+                    });
+                </script>
+                @else
+                <a class="my-navbar-item" href="{{ route('login') }}">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    ログイン
+                </a>
+                /
+                <a class="my-navbar-item" href="{{ route('register') }}">
+                    新規登録
+                </a>
+                @endif
+            </div>
         </nav>
         @yield('content')
     </div>

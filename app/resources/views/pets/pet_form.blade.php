@@ -27,6 +27,7 @@
 
                         .image-container:hover .edit-button {
                             display: block;
+                            width: 110px;
                         }
                     </style>
                     <div class="text-center">
@@ -43,24 +44,24 @@
                             <input type='file' class='' name='profile_image' id='profile_image' value="{{  old('profile_image') }}" 
                                     accept="image/*" onchange="previewImage(this)" style="display: none;"/>
                             <button type="button" class="edit-button" onclick="document.getElementById('profile_image').click()">
-                                編集
+                                画像を追加
                             </button>
                         </div>
                     </div>
                     <div>
-                        <label for="name" class="ml-2 mt-2 mb-0">ペットの名前</label>
+                        <label for="name" class="ml-2 mt-1 mb-0">ペットの名前</label>
                         <input type='text' class='form-control' name='name' value="{{ old('name') }}"/>
-                        <label for="birth_date" class="ml-2 mt-2 mb-0">誕生日</label>
+                        <label for="birth_date" class="ml-1 mt-2 mb-0">誕生日</label>
                         <input type='date' class='form-control' name='birth_date' id='birth_date' value="{{ old('birth_date') }}"/>
-                        <label for="breed" class="ml-2 mt-2 mb-0">犬種</label>
+                        <label for="breed" class="ml-2 mt-1 mb-0">犬種</label>
                         <input type='text' class='form-control' name='breed' value="{{ old('breed') }}"/>
-                        <label for="gender" class="ml-2 mt-2 mb-0">性別</label>
+                        <label for="gender" class="ml-2 mt-1 mb-0">性別</label>
                         <select name="gender" class="form-control">
                             <option value="0" {{ old('gender') === '0'? 'selected' : '' }}>女の子</option>
                             <option value="1" {{ old('gender') === '1'? 'selected' : '' }}>男の子</option>
                         </select>
                         <div class='row justify-content-center'>
-                            <button type='submit' class='btn btn-primary w-25 mt-3'>登録</button>
+                            <button type='submit' class='btn btn-primary w-25 mt-2 mb-3'>登録</button>
                         </div> 
                     </div>
                 </form>

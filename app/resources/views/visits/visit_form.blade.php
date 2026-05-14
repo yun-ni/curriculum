@@ -34,7 +34,7 @@
                         </select>
                         <label for="hospital_name" class="ml-2 mt-2 mb-0">動物病院名
                             <button type="button" id="search-button" 
-                                    class="btn btn-outline-primary ml-2 btn-sm">
+                                    class="btn btn-outline-primary px-1 py-0 ml-2 mb-1 btn-sm">
                                 場所を表示
                             </button>
                         </label>                        
@@ -73,7 +73,7 @@
                 </div>
 
                 <div class='row justify-content-center'>
-                    <button type='submit' class='btn btn-primary w-25 mt-2 mb-4'>登録</button>
+                    <button type='submit' class='btn btn-primary mt-2 mb-4' style='width: 80px;'>登録</button>
                 </div>
             </form>
         </div>

@@ -31,7 +31,7 @@ class RegistrationController extends Controller
             $profile_image->move(public_path('images'), $imageName);    
         }
 
-        $pet->user_id = 1;
+        $pet->user_id = $request->user_id;
         $pet->name = $request->name;
         $pet->birth_date = $request->birth_date;
         $pet->breed = $request->breed;
@@ -43,6 +43,7 @@ class RegistrationController extends Controller
         return redirect()->route('pet.index', ['id' => $pet->id]);
     }
 
+  // 体調記録
     public function createHealthForm() {
         return view('healths.health_form');
     }
@@ -63,6 +64,38 @@ class RegistrationController extends Controller
         return redirect()->route('pet.index', ['id' => $health->pet_id]);
     }
 
+    public function editHealthForm($id) {
+        $health = Health::find($id);
+    
+        return view('healths.health_edit', [
+            'health' => $health,
+        ]);
+    }
+
+    public function editHealth(int $id, Request $request) {
+        $instance = new Health;
+        $record = $instance->find($id);
+
+        // $columns = ['health_date', 'energy', 'appetite', 'toilets', 'walk_minutes', 'weight'];
+
+        // foreach ($columns as $column) {
+        //     $record->$colmun = $request->$colmun;
+        // }
+        // $record->save();
+        $record->pet_id = 1;
+        $record->health_date = $request->health_date;
+        $record->energy = $request->energy;
+        $record->appetite = $request->appetite;
+        $record->toilets = $request->toilets;
+        $record->walk_minutes = $request->walk_minutes;
+        $record->weight = $request->weight;
+
+        $record->save();
+        
+        return redirect()->route('pet.index', ['id' => $health->pet_id]);
+    }
+
+  // 通院記録
     public function createVisitForm() {
         return view('visits.visit_form');
     }
@@ -74,7 +107,6 @@ class RegistrationController extends Controller
         $visit->visit_date = $request->visit_date;
         $visit->has_visit = $request->has_visit;
         $visit->hospital_name = $request->hospital_name;
-        //地図用 $visit->=$request->;
         $visit->symptom = $request->symptom;
         $visit->medication = $request->medication;
         $visit->prescription = $request->prescription;
@@ -84,9 +116,5 @@ class RegistrationController extends Controller
         $visit->save();
 
         return redirect()->route('pet.index', ['id' => $visit->pet_id]);
-    }
-
-    public function initMap() {
-
     }
 }

@@ -1,29 +1,55 @@
 @extends('layouts.layout') <!-- 使用するテンプレートの宣言/('一つ上のディレクトリ.｢.blade.phpの前のファイル名｣') -->
 @section('content')
-<main class="py-2 bg-primary">
-    <!-- bg-danger：赤くしてる -->
-    <div class="container-fluid text-center bg-danger">
+<main class="py-2">
+    <div class="container-fluid text-center">
         <div class="row">
-            <!-- bg-primary：青くしてる -->
-            <div class="col py-2 bg-primary">
-                <!-- bg-light：薄い色 -->
-                <div class="d-flex align-items-center bg-light" 
-                     style="height: 26vh; padding-left: 80px; border-radius: .25rem;">
-                    <span class="align-baseline">
-                        <img src="{{ asset('images/'. $pet['profile_image']) }}"                    
-                             alt="プロフィール画像" 
-                             width="140" height="140" 
-                             style="border-radius: 50%; object-fit: cover;">
-                    </span>
-                    <span class="align-baseline pl-5">
-                        {{ $pet->name }}
-                    </span>
+            <div class="col py-2">
+                <div class="card">
+                    <!-- bg-light：薄い色 -->
+                    <div class="d-flex align-items-center bg-light" 
+                        style="height: 26vh; padding-left: 80px; border-radius: .25rem;">
+                        <style>
+                            .image-container .edit-button {
+                                display: none;
+                                position: absolute;
+                                bottom: 20px;
+                                left: 50%;
+                                transform: translateX(-50%);
+                                border: none;
+                                background: rgba(0, 0, 0, 0.5);
+                                color: white;
+                                padding: 4px 12px;
+                                border-radius: 12px;
+                            }
+                            .image-container:hover .edit-button {
+                                display: block;
+                                width: 155px;
+                            }
+                        </style>
+                        <div class="image-container"
+                            style="position: relative; display: inline-block;">
+                            <span class="align-baseline">
+                                <img src="{{ asset('images/'. $pet['profile_image']) }}"                    
+                                    alt="プロフィール画像" 
+                                    width="140" height="140" 
+                                    style="border-radius: 50%; object-fit: cover;">
+                                {{-- ファイル選択 input (画像のみ許可) display: none;で非表示 --}}
+                                <input type='file' class='' name='profile_image' id='profile_image' value="{{  old('profile_image') }}" 
+                                        accept="image/*" onchange="previewImage(this)" style="display: none;"/>
+                                <button type="button" class="edit-button" onclick="">
+                                    プロフィール編集
+                                </button>
+                            </span>
+                        </div>
+                        <span class="align-baseline pl-5">
+                            {{ $pet->name }}
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <!-- bg-primary：青くしてる -->
-            <div class="col-sm-5 pr-1 bg-primary">                   
+            <div class="col-sm-5 pr-1">                   
                 <div class="card">
                     <!-- bg-light：薄い色 -->
                     <div class="card-body bg-light">
@@ -36,21 +62,38 @@
                                 <tr>
                                     <th scope='col'>詳細</th>
                                     <th scope='col'>日付</th>
-                                    <th scope='col'>体調</th>
+                                    <th scope='col'>元気</th>
                                     <th scope='col'>お散歩</th>
                                     <th scope='col'>体重</th>
                                 </tr>
                             </thead>
                             <tbody>
+                            {{-- 84行目の {!! ... !!}: 文字列としてHTML要素（<i>タグ）を出力する --}}
                                 @foreach ($healths as $health)
                                 <tr>
                                     <td scope='col'>
-                                        <a href="">*</a>
+                                        <a href="{{ route('edit.health_form', ['id' => $health['id']]) }}"
+                                        {{--   data-toggle="modal"  --}}
+                                        {{--   data-target="#editModal"  --}}
+                                           data-id="{{ $health->id }}" 
+                                           data-name="{{ $health->name }}">
+                                            <i class="bi bi-clipboard-check"></i>
+                                        </a>
                                     </td>
-                                    <td scope='col'>{{ $health['health_date'] }}</dh>
-                                    <td scope='col'>{{ $health['energy'] }}</dh>
-                                    <td scope='col'>{{ $health['walk_minutes'] }}</dh>
-                                    <td scope='col'>{{ $health['weight'] }}</dh>
+                                    <td scope='col'>{{ $health['health_date'] }}</td>
+                                    <td scope='col'>
+                                        @if($health['energy'] === 2)
+                                            <i class="bi bi-emoji-laughing"></i>
+                                        @elseif($health['energy'] === 1)
+                                            <i class="bi bi-emoji-smile"></i>
+                                        @elseif($health['energy'] === 0)
+                                            <i class="bi bi-emoji-frown"></i>
+                                        @else
+                                            <i class="bi bi-emoji-dizzy"></i>
+                                        @endif
+                                    </td>
+                                    <td scope='col'>{{ $health['walk_minutes'] }}</td>
+                                    <td scope='col'>{{ $health['weight'] }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -58,8 +101,7 @@
                     </div>
                 </div>
             </div>
-            <!-- bg-primary：青くしてる -->
-            <div class="col-sm-7 pl-1 bg-primary">                   
+            <div class="col-sm-7 pl-1">                   
                 <div class="card">
                     <!-- bg-light：薄い色 -->
                     <div class="card-body bg-light">
@@ -81,13 +123,14 @@
                                 @foreach ($visits as $visit)
                                 <tr>
                                     <td scope='col'>
-                                        <a href="">*</a>
+                                        <a href="">
+                                            <i class="bi bi-clipboard-heart"></i>
+                                        </a>
                                     </td>
                                     <td scope='col'>{{ $visit['visit_date'] }}</td>
                                     <td scope='col'>{{ $visit['symptom'] }}</td>
                                     <td scope='col'>{{ $visit['has_visit'] === 0 ? '有' : '無' }}</td>
-                                    <td scope='col'>{{ $visit['memo'] }}</td>
-                                    <td scope='col'>{{ $visit[''] }}</td>                          
+                                    <td scope='col'>{{ $visit['memo'] }}</td>                   
                                 </tr>
                                 @endforeach
                             </tbody>
