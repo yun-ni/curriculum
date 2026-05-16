@@ -10,7 +10,7 @@
                          style="aspect-ratio: 1 / 1;">
                         <div class="text-center"> {{-- 画像も中央寄せ --}}
                             <a href="{{ route('pet.index', ['id' => $pet['id']]) }}">
-                                <img src="{{ asset('images/'. $pet['profile_image']) }}"                                          alt="プロフィール画像" 
+                                <img src="{{ asset($pet['profile_image']) }}"                                          alt="プロフィール画像" 
                                      width="200" height="200" 
                                      style="border-radius: 50%; object-fit: cover;">
                                 <div class="text-center">

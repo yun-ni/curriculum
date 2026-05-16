@@ -22,7 +22,7 @@ class PetSeeder extends Seeder
                 'birth_date' => '2021-06-25',
                 'breed' => 'トイプードル',
                 'gender' => 1, // TINYINT型
-                'profile_image' => 'kuusan.png',
+                'profile_image' => 'images/kuusan.png',
                 'user_id' => $user->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
@@ -32,7 +32,7 @@ class PetSeeder extends Seeder
                 'birth_date' => '2022-05-20',
                 'breed' => 'パグ',
                 'gender' => 1, // TINYINT型
-                'profile_image' => 'ぱぐぞう.png',
+                'profile_image' => 'images/ぱぐぞう.png',
                 'user_id' => $user->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
@@ -42,7 +42,7 @@ class PetSeeder extends Seeder
                 'breed' => 'ミックス',
                 'birth_date' => '2023-01-01',
                 'gender' => 1, // TINYINT型
-                'profile_image' => 'モフリシャス.png',
+                'profile_image' => 'images/モフリシャス.png',
                 'user_id' => $user->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

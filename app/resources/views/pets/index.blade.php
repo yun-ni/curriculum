@@ -29,7 +29,7 @@
                         <div class="image-container"
                             style="position: relative; display: inline-block;">
                             <span class="align-baseline">
-                                <img src="{{ asset('images/'. $pet['profile_image']) }}"                    
+                                <img src="{{ asset($pet->profile_image) }}"                   
                                     alt="プロフィール画像" 
                                     width="140" height="140" 
                                     style="border-radius: 50%; object-fit: cover;">
@@ -55,7 +55,7 @@
                     <div class="card-body bg-light">
                         <h5 class="card-title">体調記録</h5>
                         <div class=" text-left">
-                            <a href="{{ route('create.health_form') }}">+体調を記録</a>
+                            <a href="{{ route('create.health_form', ['id' => $pet->id]) }}">+体調を記録</a>
                         </div>
                         <table class="table">
                             <thead>
@@ -107,7 +107,7 @@
                     <div class="card-body bg-light">
                         <h5 class="card-title">通院記録</h5>
                         <div class=" text-left">
-                            <a href="{{ route('create.visit_form') }}">+通院を記録</a>
+                            <a href="{{ route('create.visit_form', ['id' => $pet->id]) }}">+通院を記録</a>
                         </div>
                         <table class="table">
                             <thead>
@@ -123,14 +123,18 @@
                                 @foreach ($visits as $visit)
                                 <tr>
                                     <td scope='col'>
-                                        <a href="">
+                                        <a href="{{ route('edit.visit_form', ['id' => $visit['id']]) }}"
+                                            {{--   data-toggle="modal"  --}}
+                                            {{--   data-target="#editModal"  --}}
+                                            data-id="{{ $visit->id }}" 
+                                            data-name="{{ $visit->name }}">
                                             <i class="bi bi-clipboard-heart"></i>
                                         </a>
                                     </td>
                                     <td scope='col'>{{ $visit['visit_date'] }}</td>
                                     <td scope='col'>{{ $visit['symptom'] }}</td>
                                     <td scope='col'>{{ $visit['has_visit'] === 0 ? '有' : '無' }}</td>
-                                    <td scope='col'>{{ $visit['memo'] }}</td>                   
+                                    <td scope='col'>{{ $visit['memo'] }}</td>                 
                                 </tr>
                                 @endforeach
                             </tbody>

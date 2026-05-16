@@ -3,7 +3,7 @@
     <div style="height: calc(97.2vh - 56px);" class="d-flex align-items-center justify-content-center">
         <div class="border bg-light d-flex flex-column align-items-center justify-content-center"
              style="width: 70%; height: 99%;">
-            <form action="{{ route('create.visit') }}" method="post">
+            <form action="{{ route('create.visit', ['id' => $id]) }}" method="post">
                 @csrf
                 <h2 class="p-2  mt-3 align-items-center font-semibold text-center text-gray-800 leading-tight">
                     {{ __('通院記録') }}

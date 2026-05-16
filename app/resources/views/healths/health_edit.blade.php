@@ -64,7 +64,9 @@
                     <span style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); color: #666;">kg</span>
                 </div>
                 <div class='row justify-content-center'>
-                    <button type='submit' class='btn btn-primary w-25 mt-2 mb-4'>変更</button>
+                    <a href="{{  route('edit.health', ['id' => $health['id']]) }}" >
+                        <button type='submit' class='btn btn-primary w-25 mt-2 mb-4'>変更</button>
+                    </a>
                 </div>
             </form>
         </div>
