@@ -8,12 +8,10 @@ use App\Pet;
 use App\Health;
 use App\Visit;
 use App\Http\Requests\CreateData;
-use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File; // Fileファサードを追加
 use Illuminate\Support\Facades\Storage; // ファイル操作用ファサードを追加
-
-//use Illuminate\Support\Facades\Auth; //ログインユーザーの取得 あとで！！！！
 
 class RegistrationController extends Controller
 {
@@ -22,7 +20,6 @@ class RegistrationController extends Controller
     }
 
     public function createPet(Request $request) { //POSTデータの取得にはRequestクラスを使用
-        $pet = new Pet;
 
         // 画像が選択されている場合
         if ($request->hasFile('profile_image')) {
@@ -37,10 +34,13 @@ class RegistrationController extends Controller
             $path = 'images/no_image.png';
         }
 
-        $pet->name = $request->name;
-        $pet->birth_date = $request->birth_date;
-        $pet->breed = $request->breed;
-        $pet->gender = $request->gender;
+        $pet = new Pet;
+        $columns = ['name', 'birth_date', 'breed', 'gender'];
+        
+        foreach ($columns as $column) {
+            $pet->$column = $request->$column;
+        }
+
         $pet->profile_image = $path;
 
         Auth::user()->pets()->save($pet);
@@ -61,14 +61,12 @@ class RegistrationController extends Controller
 
         // リクエストデータをもとにHealthモデルのインスタンスを生成して保存
         $health = new Health;
-
         $health->pet_id = $petId;
-        $health->health_date = $request->health_date;
-        $health->energy = $request->energy;
-        $health->appetite = $request->appetite;
-        $health->toilets = $request->toilets;
-        $health->walk_minutes = $request->walk_minutes;
-        $health->weight = $request->weight;
+        $columns = ['health_date', 'energy', 'appetite', 'toilets', 'walk_minutes', 'weight'];
+        
+        foreach ($columns as $column) {
+            $health->$column = $request->$column;
+        }
 
         $health->save();
 
@@ -86,12 +84,11 @@ class RegistrationController extends Controller
     public function editHealth(int $id, Request $request) {
         $record = Health::findOrFail($id);
 
-        $record->health_date = $request->health_date;
-        $record->energy = $request->energy;
-        $record->appetite = $request->appetite;
-        $record->toilets = $request->toilets;
-        $record->walk_minutes = $request->walk_minutes;
-        $record->weight = $request->weight;
+        $columns = ['health_date', 'energy', 'appetite', 'toilets', 'walk_minutes', 'weight'];
+
+        foreach ($columns as $column) {
+            $record->$column = $request->$column;
+        }
 
         $record->save();
         
@@ -106,18 +103,24 @@ class RegistrationController extends Controller
     }
 
     public function createVisit(int $petId, Request $request) {
-        $pet = Pet::findOrFail($petId);
         $visit = new Visit;
-        
+        $pet = Pet::findOrFail($petId);
         $visit->pet_id = $petId;
-        $visit->visit_date = $request->visit_date;
-        $visit->has_visit = $request->has_visit;
-        $visit->hospital_name = $request->hospital_name;
-        $visit->symptom = $request->symptom;
-        $visit->medication = $request->medication;
-        $visit->prescription = $request->prescription;
-        $visit->medical_fees = $request->medical_fees;
-        $visit->memo = $request->memo;
+
+        $columns = [
+            'visit_date', 
+            'has_visit', 
+            'hospital_name', 
+            'symptom', 
+            'medication', 
+            'prescription', 
+            'medical_fees', 
+            'memo'
+        ];
+
+        foreach ($columns as $column) {
+            $visit->$column = $request->$column;
+        }
 
         $visit->save();
 
@@ -135,14 +138,20 @@ class RegistrationController extends Controller
     public function editVisit(int $id, Request $request) {
         $record = Visit::findOrFail($id);
 
-        $record->visit_date = $request->visit_date;
-        $record->has_visit = $request->has_visit;
-        $record->hospital_name = $request->hospital_name;
-        $record->symptom = $request->symptom;
-        $record->medication = $request->medication;
-        $record->prescription = $request->prescription;
-        $record->medical_fees = $request->medical_fees;
-        $record->memo = $request->memo;
+        $columns = [
+            'visit_date', 
+            'has_visit', 
+            'hospital_name', 
+            'symptom', 
+            'medication', 
+            'prescription', 
+            'medical_fees', 
+            'memo'
+        ];
+
+        foreach ($columns as $column) {
+            $record->$column = $request->$column;
+        }
 
         $record->save();
         

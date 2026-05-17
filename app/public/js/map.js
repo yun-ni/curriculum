@@ -34,3 +34,49 @@ function initMap() {
     });
   });
 }
+
+function editMap(visitId) {
+  const geocoder = new google.maps.Geocoder();
+
+  const map = new google.maps.Map(document.getElementById("map" + visitId), {
+    zoom: 15,
+  });
+  
+  let marker = new google.maps.Marker({
+    map: map,
+  });
+
+  const hospitalInput = document.getElementById("hospital_name" + visitId);
+  const searchButton = document.getElementById("search-button" + visitId);
+
+  if (!hospitalInput || !searchButton) {
+    return;
+  }
+
+  // 編集フォームを開いた時点で、登録済みの病院名から地図を表示
+  const firstHospitalName = hospitalInput.value;
+
+  if (firstHospitalName) {
+    geocoder.geocode({ address: firstHospitalName }, function (results, status) {
+      if (status === "OK") {
+        map.setCenter(results[0].geometry.location);
+        marker.setPosition(results[0].geometry.location);
+      }
+    });
+  }
+
+  // 「場所を表示」クリック時に、入力中の病院名へ地図を移動
+  searchButton.addEventListener("click", function () {
+    const hospitalName = hospitalInput.value;
+
+    geocoder.geocode({ address: hospitalName }, function (results, status) {
+        if (status === "OK") {
+            map.setCenter(results[0].geometry.location);
+
+            marker.setPosition(results[0].geometry.location);
+        } else {
+            alert("場所が見つかりませんでした" + status);
+        }
+    });
+  });
+}

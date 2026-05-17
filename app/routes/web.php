@@ -31,11 +31,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/healths/health_form/{id}', [RegistrationController::class, 'createHealthForm'])->name('create.health_form');
     Route::post('/healths/health_form/{id}', [RegistrationController::class, 'createHealth'])->name('create.health');
     Route::get('/healths/health_edit/{id}', [RegistrationController::class, 'editHealthForm'])->name('edit.health_form');
-    Route::post('/healths/health_edit/{id}', [RegistrationController::class, 'editHealth'])->name('edit.health');
+    Route::put('/healths/health_edit/{id}', [RegistrationController::class, 'editHealth'])->name('edit.health');
 //通院記録作成
     Route::get('/visits/visit_form/{id}', [RegistrationController::class, 'createVisitForm'])->name('create.visit_form');
     Route::post('/visits/visit_form/{id}', [RegistrationController::class, 'createVisit'])->name('create.visit');
     Route::get('/visits/visit_edit/{id}', [RegistrationController::class, 'editVisitForm'])->name('edit.visit_form');
-    Route::post('/visits/visit_edit/{id}', [RegistrationController::class, 'editVisit'])->name('edit.visit');
+    Route::put('/visits/visit_edit/{id}', [RegistrationController::class, 'editVisit'])->name('edit.visit');
 });
 // Route::get('URLのパス', [コントローラークラス, 'メソッド名'])->name('ルート名');

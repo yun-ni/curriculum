@@ -72,11 +72,10 @@
                                 @foreach ($healths as $health)
                                 <tr>
                                     <td scope='col'>
-                                        <a href="{{ route('edit.health_form', ['id' => $health['id']]) }}"
-                                        {{--   data-toggle="modal"  --}}
-                                        {{--   data-target="#editModal"  --}}
-                                           data-id="{{ $health->id }}" 
-                                           data-name="{{ $health->name }}">
+                                        <!-- モーダルボタン -->
+                                        <a href="#"
+                                           data-toggle="modal"
+                                           data-target="#healthEditModal{{ $health->id }}">
                                             <i class="bi bi-clipboard-check"></i>
                                         </a>
                                     </td>
@@ -95,9 +94,17 @@
                                     <td scope='col'>{{ $health['walk_minutes'] }}</td>
                                     <td scope='col'>{{ $health['weight'] }}</td>
                                 </tr>
+                                <!-- モーダルの外枠 -->
+                                <div class="modal fade" id="healthEditModal{{ $health->id }}" tabindex="-1">
+                                    <div class="modal-dialog">                                          
+                                        <!-- ここで別ファイルを読み込む -->
+                                        @include('healths.health_edit')
+                                    </div>
+                                </div>
                                 @endforeach
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>
@@ -123,11 +130,9 @@
                                 @foreach ($visits as $visit)
                                 <tr>
                                     <td scope='col'>
-                                        <a href="{{ route('edit.visit_form', ['id' => $visit['id']]) }}"
-                                            {{--   data-toggle="modal"  --}}
-                                            {{--   data-target="#editModal"  --}}
-                                            data-id="{{ $visit->id }}" 
-                                            data-name="{{ $visit->name }}">
+                                        <a href="#"
+                                           data-toggle="modal"
+                                           data-target="#visitEditModal{{ $visit->id }}">
                                             <i class="bi bi-clipboard-heart"></i>
                                         </a>
                                     </td>
@@ -136,6 +141,13 @@
                                     <td scope='col'>{{ $visit['has_visit'] === 0 ? '有' : '無' }}</td>
                                     <td scope='col'>{{ $visit['memo'] }}</td>                 
                                 </tr>
+                                <!-- モーダルの外枠 -->
+                                <div class="modal fade" id="visitEditModal{{ $visit->id }}" tabindex="-1" aria-labelledby="visitEditModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" style="width: 60%; max-width: none;">                                          
+                                        <!-- ここで別ファイルを読み込む -->
+                                        @include('visits.visit_edit', ['visitId' => $visit->id])
+                                    </div>
+                                </div>
                                 @endforeach
                             </tbody>
                         </table>
@@ -145,4 +157,9 @@
         </div>
     </div>
 </main>
+
+<script src="{{ asset('js/map.js') }}"></script>
+<script async
+        src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&loading=async">
+</script>
 @endsection
