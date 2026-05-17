@@ -67,8 +67,10 @@
                             <span style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); color: #666;">円</span>
                         </div>
                         <label for="memo" class="ml-2 mt-2 mb-0">メモ</label>
-                        <input type="text" class="form-control" style="height: 100px;"
-                               name="memo" id="memo" value="{{ old('memo') }}"/>
+                            <textarea class="form-control"
+                                style="height: 100px;"
+                                name="memo"
+                                id="memo">{{ old('memo') }}</textarea>
                     </div>
                 </div>
 

@@ -26,11 +26,11 @@
                     <div class="col-md-6">
                         <label for="visit_date" class="ml-2 mt-2 mb-0">日付</label>
                         <input type="date" class="form-control" name="visit_date" 
-                                id="visit_date" value="{{ old('visit_date') }}"/>
+                                id="visit_date" value="{{ old('visit_date', $visit->visit_date) }}"/>
                         <label for="has_visit" class="ml-2 mt-2 mb-0">通院</label>
                         <select name="has_visit" class="form-control">
-                            <option value="0" {{ old('has_visit') === '0'? 'selected' : '' }}>あり</option>
-                            <option value="1" {{ old('has_visit') === '1'? 'selected' : '' }}>なし</option>
+                            <option value="0" {{ old('has_visit', $visit->has_visit) == '0'? 'selected' : '' }}>あり</option>
+                            <option value="1" {{ old('has_visit', $visit->has_visit) == '1'? 'selected' : '' }}>なし</option>
                         </select>
                         <label for="hospital_name" class="ml-2 mt-2 mb-0">動物病院名
                             <button type="button" id="search-button" 
@@ -39,7 +39,7 @@
                             </button>
                         </label>                        
                             <input type="text" class="form-control" name="hospital_name"
-                                    id="hospital_name" value="{{ old('hospital_name') }}" />
+                                    id="hospital_name" value="{{ old('hospital_name', $visit->hospital_name) }}" />
                         
                         {{-- 地図を表示する領域 --}}
                         <div id="map" class="mt-3"></div>
@@ -54,28 +54,27 @@
                     <div class="col-md-6">
                         <label for="symptom" class="ml-2 mt-2 mb-0">症状</label>
                         <input type="text" class="form-control" name="symptom"
-                                id="symptom" value="{{ old('symptom') }}"/>
+                                id="symptom" value="{{ old('symptom', $visit->symptom) }}"/>
                         <label for="medication" class="ml-2 mt-2 mb-0">投薬</label>
                         <input type="text" class="form-control" name="medication"
-                                id="medication" value="{{ old('medication') }}"/>
+                                id="medication" value="{{ old('medication', $visit->medication) }}"/>
                         <label for="prescription" class="ml-2 mt-2 mb-0">処方薬</label>
                         <input type="text" class="form-control" name="prescription"
-                                id="prescription" value="{{ old('prescription') }}"/>                
-                        <label for="weightmedical_fees" class="ml-2 mt-2 mb-0">医療費</label>
+                                id="prescription" value="{{ old('prescription', $visit->prescription) }}"/>                
+                        <label for="medical_fees" class="ml-2 mt-2 mb-0">医療費</label>
                         <div style="position: relative;">
-                            <input type="number" step="0" min="0" class='form-control' name="medical_fees" value="{{ old('medical_fees') }}"/>
+                            <input type="number" step="0" min="0" class='form-control' name="medical_fees" value="{{ old('medical_fees', $visit->medical_fees) }}"/>
                             <span style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); color: #666;">円</span>
                         </div>
                         <label for="memo" class="ml-2 mt-2 mb-0">メモ</label>
-                        <input type="text" class="form-control" style="height: 100px;"
-                               name="memo" id="memo" value="{{ old('memo') }}"/>
+                            <textarea class="form-control"
+                                style="height: 100px;"
+                                name="memo"
+                                id="memo">{{ old('memo', $visit->memo) }}</textarea>
                     </div>
                 </div>
-
                 <div class='row justify-content-center'>
-                    <button type='submit' 
-                            onclick="location.href='{{ route('edit.visit', ['id' => $visit['id']]) }}'"
-                            class='btn btn-primary mt-2 mb-4' style='width: 80px;'>更新</button>
+                    <button type='submit' class='btn btn-primary mt-2 mb-4' style='width: 80px;'>更新</button>
                 </div>
             </form>
         </div>

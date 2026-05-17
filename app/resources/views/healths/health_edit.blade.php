@@ -19,7 +19,7 @@
                 </style>
                 <label for="health_date" class="ml-2 mb-0">日付</label>
                     <input type='date' class='form-control' name='health_date' 
-                             id='health_date' value="{{ $health->health_date }}"/>
+                             id='health_date' value="{{ old('health_date', $health->health_date) }}"/>
                 <label for="energy" class="ml-2 mt-2 mb-0">元気</label>
                 <div class='form-control radio-group text-center'>
                     <label>
@@ -55,18 +55,16 @@
                 </div>
                 <label for="walk_minutes" class="ml-2 mt-2 mb-0">散歩</label>
                 <div style="position: relative;">
-                    <input type="number" class='form-control' name='walk_minutes' value="{{ $health->walk_minutes }}" min="0" />
+                    <input type="number" class='form-control' name='walk_minutes' value="{{ old('walk_minutes', $health->walk_minutes) }}" min="0" />
                     <span style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); color: #666;">分</span>
                 </div>
                 <label for="weight" class="ml-2 mt-2 mb-0">体重</label>
                 <div style="position: relative;">
-                    <input type="number" step="0.01" min="0" class='form-control' name='weight' value="{{ $health->weight }}"/>
+                    <input type="number" step="0.01" min="0" class='form-control' name='weight' value="{{ old('weight', $health->weight) }}"/>
                     <span style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); color: #666;">kg</span>
                 </div>
                 <div class='row justify-content-center'>
-                    <a href="{{  route('edit.health', ['id' => $health['id']]) }}" >
-                        <button type='submit' class='btn btn-primary w-25 mt-2 mb-4'>変更</button>
-                    </a>
+                    <button type="submit" class="btn btn-primary w-25 mt-2 mb-4">変更</button>
                 </div>
             </form>
         </div>

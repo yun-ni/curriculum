@@ -135,14 +135,14 @@ class RegistrationController extends Controller
     public function editVisit(int $id, Request $request) {
         $record = Visit::findOrFail($id);
 
-        $visit->visit_date = $request->visit_date;
-        $visit->has_visit = $request->has_visit;
-        $visit->hospital_name = $request->hospital_name;
-        $visit->symptom = $request->symptom;
-        $visit->medication = $request->medication;
-        $visit->prescription = $request->prescription;
-        $visit->medical_fees = $request->medical_fees;
-        $visit->memo = $request->memo;
+        $record->visit_date = $request->visit_date;
+        $record->has_visit = $request->has_visit;
+        $record->hospital_name = $request->hospital_name;
+        $record->symptom = $request->symptom;
+        $record->medication = $request->medication;
+        $record->prescription = $request->prescription;
+        $record->medical_fees = $request->medical_fees;
+        $record->memo = $request->memo;
 
         $record->save();
         
