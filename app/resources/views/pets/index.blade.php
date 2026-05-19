@@ -6,8 +6,8 @@
             <div class="col py-2">
                 <div class="card">
                     <!-- bg-light：薄い色 -->
-                    <div class="d-flex align-items-center bg-light" 
-                        style="height: 26vh; padding-left: 80px; border-radius: .25rem;">
+                    <div class="d-flex flex-column flex-md-row align-items-center bg-light"
+                    style="min-height: 26vh; padding: 20px; border-radius: .25rem;">
                         <style>
                             .image-container .edit-button {
                                 display: none;
@@ -33,17 +33,23 @@
                                     alt="プロフィール画像" 
                                     width="140" height="140" 
                                     style="border-radius: 50%; object-fit: cover;">
-                                {{-- ファイル選択 input (画像のみ許可) display: none;で非表示 --}}
-                                <input type='file' class='' name='profile_image' id='profile_image' value="{{  old('profile_image') }}" 
-                                        accept="image/*" onchange="previewImage(this)" style="display: none;"/>
-                                <button type="button" class="edit-button" onclick="">
-                                    プロフィール編集
-                                </button>
                             </span>
                         </div>
                         <span class="align-baseline pl-5">
-                            {{ $pet->name }}
+                            {{ $pet->name }} の
                         </span>
+                        <!-- #：現在のページにとどまる -->
+                        <a href="#" data-toggle="modal" class="ml-1"
+                           data-target="#petEditModal{{ $pet->id }}">
+                            プロフィールを表示
+                        </a>
+                        <!-- モーダルの外枠 -->
+                        <div class="modal fade" id="petEditModal{{ $pet->id }}" tabindex="-1">
+                            <div class="modal-dialog">                                          
+                                <!-- ここで別ファイルを読み込む -->
+                                @include('pets.pet_edit')
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -48,6 +48,48 @@ class RegistrationController extends Controller
         return redirect()->route('pet.index', ['id' => $pet->id]);
     }
 
+    public function editPetForm($id) {
+        $pet = Pet::find($id);
+    
+        return view('pets.pet_edit', [
+            'pet' => $pet,
+        ]);
+    }
+
+    public function editPet(int $id, Request $request) {
+        $record = Pet::findOrFail($id);
+        
+        $columns = [
+            'name', 
+            'birth_date', 
+            'breed', 
+            'gender', 
+        ];
+
+        foreach ($columns as $column) {
+            $record->$column = $request->$column;
+        }
+
+        if ($request->hasFile('profile_image')) {
+            $profile_image = $request->file('profile_image');
+            $imageName = time() . '.' . $profile_image->getClientOriginalExtension();
+            $profile_image->move(public_path('images'), $imageName);
+        
+            $record->profile_image = 'images/' . $imageName;
+        }
+        
+        $record->save();
+        
+        return redirect()->route('pet.index', ['id' => $record->id]);
+    }
+
+    public function destroyPet(int $id) {
+        $pet = Pet::findOrFail($id);
+        $pet->delete();
+    
+        return redirect()->route('home')->with('message', 'ペットデータを削除しました');
+    }
+
     // 体調記録
     public function createHealthForm($id) {
         return view('healths.health_form', [
@@ -157,4 +199,5 @@ class RegistrationController extends Controller
         
         return redirect()->route('pet.index', ['id' => $record->pet_id]);
     }
+    
 }
