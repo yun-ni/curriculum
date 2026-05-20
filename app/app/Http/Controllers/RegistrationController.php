@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File; // Fileファサードを追加
 use Illuminate\Support\Facades\Storage; // ファイル操作用ファサードを追加
 
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
 class RegistrationController extends Controller
 {
     public function createPetForm() {
@@ -84,6 +88,24 @@ class RegistrationController extends Controller
     }
 
     public function destroyPet(int $id) {
+        // healthsテーブルの外部キーを変更
+        Schema::table('healths', function (Blueprint $table) {
+            $table->dropForeign('healths_pet_id_foreign'); 
+            $table->foreign('pet_id')
+                ->references('id')
+                ->on('pets')
+                ->onDelete('cascade');
+        });
+
+        // visitsテーブルの外部キーを変更
+        Schema::table('visits', function (Blueprint $table) {
+            $table->dropForeign('visits_pet_id_foreign'); 
+            $table->foreign('pet_id')
+                ->references('id')
+                ->on('pets')
+                ->onDelete('cascade');
+        });
+
         $pet = Pet::findOrFail($id);
         $pet->delete();
     
@@ -135,6 +157,15 @@ class RegistrationController extends Controller
         $record->save();
         
         return redirect()->route('pet.index', ['id' => $record->pet_id]);
+    }
+
+    public function destroyHealth(int $id) {
+        $health = Health::findOrFail($id);
+        $petId = $health->pet_id;
+        $health->delete();
+    
+        return redirect()->route('pet.index', ['id' => $petId])
+                         ->with('message', '体調記録のデータを削除しました');
     }
 
   // 通院記録
@@ -200,4 +231,12 @@ class RegistrationController extends Controller
         return redirect()->route('pet.index', ['id' => $record->pet_id]);
     }
     
+    public function destroyVisit(int $id) {
+        $visit = Visit::findOrFail($id);
+        $petId = $visit->pet_id;
+        $visit->delete();
+    
+        return redirect()->route('pet.index', ['id' => $petId])
+                         ->with('message', '通院記録のデータを削除しました');
+    }
 }

@@ -11,9 +11,10 @@
             </button>
         </div>
 
+        <!-- タイトル -->
         <div class="modal-body d-flex flex-column align-items-center">
             <h2>{{ __('プロフィール') }}</h2>
-            
+
             <!-- 入力フォーム -->
             <div class="pet-form-area">
                 <div class="">
@@ -50,7 +51,7 @@
                 </div>
                 <div class='row justify-content-center'>
                     <button type='submit' class='btn btn-primary w-25 mt-2 mb-3 mr-2'>変更</button>
-                    <button type='submit' form="delete-pet-form" class='btn btn-primary w-25 mt-2 mb-3 ml-2'
+                    <button type='submit' form="delete-pet-form" class='btn btn-danger w-25 mt-2 mb-3 ml-2'
                             onclick="return confirm('プロフィールを削除しますか')">削除</button>
                 </div>
             </div> 

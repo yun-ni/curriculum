@@ -11,6 +11,7 @@
             </button>
         </div>
 
+        <!-- タイトル -->
         <div class="modal-body d-flex flex-column align-items-center">
             <h2>{{ __('体調記録') }}</h2>
 
@@ -69,7 +70,30 @@
                     <span style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); color: #666;">kg</span>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary mt-3 mb-3" style="width: 90px;">変更</button>
+            <div class='d-flex justify-content-center mt-3'>
+                <button type='submit' class='btn btn-primary mr-3 px-4'>変更</button>
+                <button type='submit' form="delete-health-form" class='btn btn-danger px-4'
+                        onclick="return confirm('体調記録を削除しますか')">削除</button>
+            </div>
         </div>   
+    </form>
+    <style>
+        .health-form-area {
+            width: 300px;
+        }
+        .form-control {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .radio-group label {
+            margin-right: 15px; /* 選択肢の間のスペース */
+            cursor: pointer;
+        }
+    </style>
+    <!-- 削除フォーム -->
+    <form id="delete-health-form"
+        action="{{ route('destroy.health', ['id' => $health->id]) }}" method="post">
+        @csrf
+        @method('DELETE')
     </form>
 </div>

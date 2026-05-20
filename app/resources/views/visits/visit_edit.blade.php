@@ -86,10 +86,18 @@
                         </textarea>
                     </div>
                 </div>
-                <div class='row justify-content-center'>
-                    <button type='submit' class='btn btn-primary mt-2 mb-4' style='width: 80px;'>更新</button>
-                </div>    
+                <div class='d-flex justify-content-center mt-3'>
+                    <button type='submit' class='btn btn-primary mr-3 px-4'>変更</button>
+                    <button type='submit' form="delete-visit-form" class='btn btn-danger px-4'
+                            onclick="return confirm('通院記録を削除しますか')">削除</button>
+                </div>  
             </div>
         </div>
+    </form>
+    <!-- 削除フォーム -->
+    <form id="delete-visit-form"
+        action="{{ route('destroy.visit', ['id' => $visit->id]) }}" method="post">
+        @csrf
+        @method('DELETE')
     </form>
 </div>

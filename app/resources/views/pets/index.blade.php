@@ -1,5 +1,10 @@
 @extends('layouts.layout') <!-- 使用するテンプレートの宣言/('一つ上のディレクトリ.｢.blade.phpの前のファイル名｣') -->
 @section('content')
+@if (session('message'))
+    <div class="alert alert-success text-center">
+        {{ session('message') }}
+    </div>
+@endif
 <main class="py-2">
     <div class="container-fluid text-center">
         <div class="row">

@@ -1,5 +1,10 @@
 @extends('layouts.layout')
 @section('content')
+@if (session('message'))
+    <div class="alert alert-success text-center">
+        {{ session('message') }}
+    </div>
+@endif
     <main>
         <div class="container">
             {{-- row-cols-* で1行あたりの列数を指定 (例: md以上で3列、smで2列、xsで1列) --}}
