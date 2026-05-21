@@ -4,6 +4,8 @@
         @csrf
         @method('PUT')
 
+        <input type="hidden" name="health_id" value="{{ $health->id }}">
+
         <!-- 閉じるボタン -->
         <div class="modal-header border-0 pt-0">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -14,6 +16,29 @@
         <!-- タイトル -->
         <div class="modal-body d-flex flex-column align-items-center">
             <h2>{{ __('体調記録') }}</h2>
+
+            <!-- バリデーション -->
+            @if ($errors->health->any() && old('health_id') == $health->id)
+                <div class="alert alert-danger error-area">
+                    <ul class="mb-0">
+                        @foreach ($errors->health->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                
+                <script>
+                    $(function () {
+                        // // エラーがある場合はモーダルを表示
+                        $('#healthEditModal{{ $health->id }}').modal('show');
+
+                        // モーダルが閉じられたときにエラーメッセージをクリア（次回開いた時に残らないようにする）
+                        $('#healthEditModal{{ $health->id }}').on('hidden.bs.modal', function () {
+                            $(this).find('.error-area').remove(); 
+                        });
+                    });
+                </script>
+            @endif
 
             <!-- 入力フォーム -->
             <div class="health-form-area">
@@ -88,6 +113,24 @@
         .radio-group label {
             margin-right: 15px; /* 選択肢の間のスペース */
             cursor: pointer;
+        }
+        .error-area {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 380px;
+            padding: 8px 16px;
+            font-size: 16px;
+            background: rgba(255, 200, 200, 0.6);
+            backdrop-filter: blur(3px);
+            border: 1px solid rgba(255, 150, 150, 0.5);
+            border-radius: 10px;
+            z-index: 1000;
+        }
+        .error-area ul {
+            padding-left: 20%;
+            margin-bottom: 0;
         }
     </style>
     <!-- 削除フォーム -->

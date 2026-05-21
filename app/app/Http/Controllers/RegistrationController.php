@@ -2,20 +2,15 @@
 // データの登録や編集用
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\User;
+use Illuminate\Support\Facades\Auth;
+
 use App\Pet;
 use App\Health;
 use App\Visit;
-use App\Http\Requests\CreateData;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File; // Fileファサードを追加
-use Illuminate\Support\Facades\Storage; // ファイル操作用ファサードを追加
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use App\Http\Requests\CreatePet; // バリデーション
+use App\Http\Requests\CreateHealth;
+use App\Http\Requests\CreateVisit;
 
 class RegistrationController extends Controller
 {
@@ -23,7 +18,7 @@ class RegistrationController extends Controller
         return view('pets.pet_form');
     }
 
-    public function createPet(Request $request) { //POSTデータの取得にはRequestクラスを使用
+    public function createPet(CreatePet $request) {
 
         // 画像が選択されている場合
         if ($request->hasFile('profile_image')) {
@@ -60,7 +55,7 @@ class RegistrationController extends Controller
         ]);
     }
 
-    public function editPet(int $id, Request $request) {
+    public function editPet(int $id, CreatePet $request) {
         $record = Pet::findOrFail($id);
         
         $columns = [
@@ -88,27 +83,13 @@ class RegistrationController extends Controller
     }
 
     public function destroyPet(int $id) {
-        // healthsテーブルの外部キーを変更
-        Schema::table('healths', function (Blueprint $table) {
-            $table->dropForeign('healths_pet_id_foreign'); 
-            $table->foreign('pet_id')
-                ->references('id')
-                ->on('pets')
-                ->onDelete('cascade');
-        });
-
-        // visitsテーブルの外部キーを変更
-        Schema::table('visits', function (Blueprint $table) {
-            $table->dropForeign('visits_pet_id_foreign'); 
-            $table->foreign('pet_id')
-                ->references('id')
-                ->on('pets')
-                ->onDelete('cascade');
-        });
-
         $pet = Pet::findOrFail($id);
+        
+        Health::where('pet_id', $id)->delete();
+        Visit::where('pet_id', $id)->delete();
+        
         $pet->delete();
-    
+        
         return redirect()->route('home')->with('message', 'ペットデータを削除しました');
     }
 
@@ -119,7 +100,7 @@ class RegistrationController extends Controller
         ]);
     }
 
-    public function createHealth(int $petId, Request $request) {
+    public function createHealth(int $petId, CreateHealth $request) {
         // ペットを取得（見つからない場合は404エラーを出すなら findOrFail を推奨）
         $pet = Pet::findOrFail($petId);
 
@@ -145,7 +126,7 @@ class RegistrationController extends Controller
         ]);
     }
 
-    public function editHealth(int $id, Request $request) {
+    public function editHealth(int $id, CreateHealth $request) {
         $record = Health::findOrFail($id);
 
         $columns = ['health_date', 'energy', 'appetite', 'toilets', 'walk_minutes', 'weight'];
@@ -175,7 +156,7 @@ class RegistrationController extends Controller
         ]);
     }
 
-    public function createVisit(int $petId, Request $request) {
+    public function createVisit(int $petId, CreateVisit $request) {
         $visit = new Visit;
         $pet = Pet::findOrFail($petId);
         $visit->pet_id = $petId;
@@ -208,7 +189,7 @@ class RegistrationController extends Controller
         ]);
     }
 
-    public function editVisit(int $id, Request $request) {
+    public function editVisit(int $id, CreateVisit $request) {
         $record = Visit::findOrFail($id);
 
         $columns = [

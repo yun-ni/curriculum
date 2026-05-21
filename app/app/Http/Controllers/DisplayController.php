@@ -2,7 +2,6 @@
 // DBからのデータ取得の管理用
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\User;
 use App\Pet;
 use App\Health;

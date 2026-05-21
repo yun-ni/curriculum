@@ -8,6 +8,15 @@
                 <h2 class="p-2  mt-3 align-items-center font-semibold text-center text-gray-800 leading-tight">
                     {{ __('通院記録') }}
                 </h2>
+                @if ($errors->visit->any())
+                    <div class="alert alert-danger error-area">
+                        <ul class="mb-0">
+                            @foreach ($errors->visit->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <style>
                     /* 横幅 */
                     .form-control {
@@ -19,6 +28,24 @@
                         width: 300px;
                         /* 上下は0、左右は自動 */
                         margin: 0 auto;
+                    }
+                    .error-area {
+                        position: absolute;
+                        top: 20px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        width: 380px;
+                        padding: 8px 16px;
+                        font-size: 16px;
+                        background: rgba(255, 200, 200, 0.6);
+                        backdrop-filter: blur(3px);
+                        border: 1px solid rgba(255, 150, 150, 0.5);
+                        border-radius: 10px;
+                        z-index: 1000;
+                    }
+                    .error-area ul {
+                        padding-left: 20%;
+                        margin-bottom: 0;
                     }
                 </style> 
                 <div class="row">

@@ -4,6 +4,8 @@
         @csrf
         @method('PUT')
 
+        <input type="hidden" name="visit_id" value="{{ $visit->id }}">
+
         <!-- 閉じるボタン -->
         <div class="modal-header border-0 pt-0">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -13,6 +15,30 @@
 
         <div class="modal-body d-flex flex-column align-items-center">
             <h2>{{ __('通院記録') }}</h2>
+
+            <!-- バリデーション -->
+            @if ($errors->visit->any() && old('visit_id') == $visit->id)
+                <div class="alert alert-danger error-area">
+                    <ul class="mb-0">
+                        @foreach ($errors->visit->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                
+                <script>
+                    $(function () {
+                        // // エラーがある場合はモーダルを表示
+                        $('#visitEditModal{{ $visit->id }}').modal('show');
+
+                        // モーダルが閉じられたときにエラーメッセージをクリア（次回開いた時に残らないようにする）
+                        $('#visitEditModal{{ $visit->id }}').on('hidden.bs.modal', function () {
+                            $(this).find('.error-area').remove(); 
+                        });
+                    });
+                </script>
+            @endif
+
             <style>
                 .visit-map {
                     height: 170px;
@@ -21,6 +47,24 @@
                 }
                 .visit-form-row {
                     width: 100%;
+                }
+                .error-area {
+                    position: absolute;
+                    top: 0px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 380px;
+                    padding: 8px 16px;
+                    font-size: 16px;
+                    background: rgba(255, 200, 200, 0.6);
+                    backdrop-filter: blur(3px);
+                    border: 1px solid rgba(255, 150, 150, 0.5);
+                    border-radius: 10px;
+                    z-index: 1000;
+                }
+                .error-area ul {
+                    padding-left: 20%;
+                    margin-bottom: 0;
                 }
             </style>
             <div class="row visit-form-row">
