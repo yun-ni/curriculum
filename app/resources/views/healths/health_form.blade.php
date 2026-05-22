@@ -28,7 +28,7 @@
                     margin-bottom: 0;
                 }
             </style>
-            <form action="{{ route('create.health', ['id' => $id]) }}" method="post">
+            <form action="{{ route('create.health', ['id' => $pet->id]) }}" method="post">
                 @csrf                
                 <h2 class="p-2  mt-3 align-items-center font-semibold text-center text-gray-800 leading-tight">
                     {{ __('体調記録') }}

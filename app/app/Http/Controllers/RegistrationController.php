@@ -94,9 +94,11 @@ class RegistrationController extends Controller
     }
 
     // 体調記録
-    public function createHealthForm($id) {
+    public function createHealthForm(int $petId) {
+        $pet = Pet::findOrFail($petId);
+
         return view('healths.health_form', [
-            'id' => $id,
+            'id' => $petId,
         ]);
     }
 
@@ -150,9 +152,10 @@ class RegistrationController extends Controller
     }
 
   // 通院記録
-    public function createVisitForm($id) {
+    public function createVisitForm(int $petId) {
+        $pet = Pet::findOrFail($petId);
         return view('visits.visit_form', [
-            'id' => $id,
+            'id' => $petId,
         ]);
     }
 
