@@ -52,8 +52,8 @@
                     }
                 </style>
                 <label for="health_date" class="ml-2 mb-0">日付</label>
-                    <input type='date' class='form-control' name='health_date' 
-                             id='health_date' value="{{ old('health_date') }}"/>
+                    <input type="date" class="form-control" name="health_date" 
+                           id="health_date" value="{{ old('health_date', date('Y-m-d')) }}"/>
                 <label for="energy" class="ml-2 mt-2 mb-0">元気</label>
                 <div class='form-control radio-group text-center'>
                     <label>

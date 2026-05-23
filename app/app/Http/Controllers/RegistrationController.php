@@ -48,14 +48,14 @@ class RegistrationController extends Controller
     }
 
     public function editPetForm($id) {
-        $pet = Pet::find($id);
+        $pet = Pet::findOrFail($id);
     
         return view('pets.pet_edit', [
             'pet' => $pet,
         ]);
     }
 
-    public function editPet(int $id, CreatePet $request) {
+    public function editPet(CreatePet $request, int $id) {
         $record = Pet::findOrFail($id);
         
         $columns = [
@@ -98,11 +98,11 @@ class RegistrationController extends Controller
         $pet = Pet::findOrFail($petId);
 
         return view('healths.health_form', [
-            'id' => $petId,
+            'pet' => $pet,
         ]);
     }
 
-    public function createHealth(int $petId, CreateHealth $request) {
+    public function createHealth(CreateHealth $request, int $petId) {
         // ペットを取得（見つからない場合は404エラーを出すなら findOrFail を推奨）
         $pet = Pet::findOrFail($petId);
 
@@ -128,7 +128,7 @@ class RegistrationController extends Controller
         ]);
     }
 
-    public function editHealth(int $id, CreateHealth $request) {
+    public function editHealth(CreateHealth $request, int $id) {
         $record = Health::findOrFail($id);
 
         $columns = ['health_date', 'energy', 'appetite', 'toilets', 'walk_minutes', 'weight'];
@@ -159,7 +159,7 @@ class RegistrationController extends Controller
         ]);
     }
 
-    public function createVisit(int $petId, CreateVisit $request) {
+    public function createVisit(CreateVisit $request, int $petId) {
         $visit = new Visit;
         $pet = Pet::findOrFail($petId);
         $visit->pet_id = $petId;
@@ -192,7 +192,7 @@ class RegistrationController extends Controller
         ]);
     }
 
-    public function editVisit(int $id, CreateVisit $request) {
+    public function editVisit(CreateVisit $request, int $id) {
         $record = Visit::findOrFail($id);
 
         $columns = [
