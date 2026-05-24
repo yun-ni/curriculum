@@ -36,15 +36,20 @@ return [
     */
 
     'guards' => [
+
         'web' => [
-            'driver' => 'session',
+            'driver' => 'session', // Webページを遷移してもログイン状態が維持される
             'provider' => 'users',
         ],
 
-        'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
-            'hash' => false,
+        'vets' => [
+            'driver' => 'session',
+            'provider' => 'vets',
+        ],
+
+        'admin' => [
+            'driver' => 'session', // 管理者のログイン状態を維持
+            'provider' => 'admin',
         ],
     ],
 
@@ -65,16 +70,27 @@ return [
     |
     */
 
-    'providers' => [
+    'providers' => [ // アプリケーションが認証情報を取得し、照合
+
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
 
+        'vets' => [
+            'driver' => 'eloquent', // データベースからユーザーを取得
+            'model' => App\Vet::class,
+        ],
+
+        'admin' => [
+            'driver' => 'eloquent',
+            'model' => App\Admin::class,
+        ],
+
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
-        // ],
+        // ],        
     ],
 
     /*
@@ -96,8 +112,8 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',
-            'expire' => 60,
-            'throttle' => 60,
+            'expire' => 60, // 日
+            'throttle' => 60, // 秒
         ],
     ],
 

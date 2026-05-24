@@ -1,6 +1,6 @@
 <?php
 
-// 正しくは、resources/lang/ja/auth.php
+// 正しい参照元
 
 return [
 

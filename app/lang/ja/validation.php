@@ -1,4 +1,5 @@
 <?php
+// 正しくは、resources/lang/ja/auth.php 
 
 return [
 

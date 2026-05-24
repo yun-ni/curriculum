@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route; //Route::get(...) の宣言
 use App\Http\Controllers\DisplayController;
 use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Auth;
+
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\VetController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,3 +46,18 @@ Route::group(['middleware' => 'auth'], function() {
     Route::delete('/visits/visit_edit/{id}', [RegistrationController::class, 'destroyVisit'])->name('destroy.visit');
 });
 // Route::get('URLのパス', [コントローラークラス, 'メソッド名'])->name('ルート名');
+
+// 獣医師画面
+Route::middleware(['auth:vets'])->prefix('vet')->group(function () {
+    Route::get('/dashboard', [VetController::class, 'dashboard'])->name('vet.dashboard');
+    Route::get('/show/{id}', [VetController::class, 'show'])->name('vet.show');
+    Route::get('/index/{id}', [VetController::class, 'index'])->name('vet.index');
+    Route::get('/pdf/{id}', [VetController::class, 'pdf'])->name('vet.pdf');
+});
+
+// 管理者画面
+Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/show/{id}', [AdminController::class, 'show'])->name('admin.show');
+    Route::get('/index/{id}', [AdminController::class, 'index'])->name('admin.index');
+});
