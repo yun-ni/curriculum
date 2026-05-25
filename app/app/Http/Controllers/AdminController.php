@@ -31,7 +31,8 @@ class AdminController extends Controller
 
     public function index(int $id)
     {
-        $pet = Pet::findOrFail($id);
+        $pet = Pet::with('user')->findOrFail($id);
+    
         $healths = Health::where('pet_id', $id)->get();
         $visits = Visit::where('pet_id', $id)->get();
     
@@ -42,6 +43,42 @@ class AdminController extends Controller
         ]);
     }
 
+    public function search(Request $request)
+    {
+        $email = $request->input('email');
+        $name = $request->input('name');
+        $petName = $request->input('pet_name');
+        $birthDate = $request->input('birth_date');
+    
+        $query = User::with('pets');
+    
+        if (!empty($email)) {
+            $query->where('email', 'LIKE', "%{$email}%");
+        }
+    
+        if (!empty($name)) {
+            $query->where('name', 'LIKE', "%{$name}%");
+        }
+    
+        if (!empty($petName)) {
+            $query->whereHas('pets', function ($q) use ($petName) {
+                $q->where('name', 'LIKE', "%{$petName}%");
+            });
+        }
+    
+        if (!empty($birthDate)) {
+            $query->whereHas('pets', function ($q) use ($birthDate) {
+                $q->where('birth_date', $birthDate);
+            });
+        }
+    
+        $users = $query->get();
+    
+        return view('admin.dashboard', [
+            'users' => $users,
+        ]);
+    }
+
     public function logout()
     {
         Auth::guard('admin')->logout();
@@ -49,4 +86,3 @@ class AdminController extends Controller
         return redirect()->route('login');
     }
 }
-

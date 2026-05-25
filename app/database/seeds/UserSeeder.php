@@ -16,12 +16,30 @@ class UserSeeder extends Seeder
     public function run()
     {
         $params = [
+            [
             'name' => 'A',
             'email' => 'user01@gmail.com',
             'password' => Hash::make('user01'),
             'remember_token' => Str::random(10), //ランダムトークンを設定
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
+            ],
+            [
+            'name' => 'B',
+            'email' => 'user02@gmail.com',
+            'password' => Hash::make('user02'),
+            'remember_token' => Str::random(10), //ランダムトークンを設定
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+            ],
+            [
+            'name' => 'C',
+            'email' => 'user03@gmail.com',
+            'password' => Hash::make('user03'),
+            'remember_token' => Str::random(10), //ランダムトークンを設定
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+            ],
         ];
             
         DB::table('users')->insert($params);

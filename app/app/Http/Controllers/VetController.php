@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+// PDFを作成・出力するための外部パッケージ（laravel-dompdf）
+use Barryvdh\DomPDF\Facade\Pdf;
+
 use App\User;
 use App\Pet;
 use App\Visit;
@@ -32,10 +35,46 @@ class VetController extends Controller
     {
         $pet = Pet::findOrFail($id);
         $visits = Visit::where('pet_id', $id)->get();
-    
+
         return view('vets.index', [
             'pet' => $pet,
             'visits' => $visits,
+        ]);
+    }
+
+    public function search(Request $request)
+    {
+        $email = $request->input('email');
+        $name = $request->input('name');
+        $petName = $request->input('pet_name');
+        $birthDate = $request->input('birth_date');
+    
+        $query = User::with('pets');
+    
+        if (!empty($email)) {
+            $query->where('email', 'LIKE', "%{$email}%");
+        }
+    
+        if (!empty($name)) {
+            $query->where('name', 'LIKE', "%{$name}%");
+        }
+    
+        if (!empty($petName)) {
+            $query->whereHas('pets', function ($q) use ($petName) {
+                $q->where('name', 'LIKE', "%{$petName}%");
+            });
+        }
+    
+        if (!empty($birthDate)) {
+            $query->whereHas('pets', function ($q) use ($birthDate) {
+                $q->where('birth_date', $birthDate);
+            });
+        }
+    
+        $users = $query->get();
+    
+        return view('vets.dashboard', [
+            'users' => $users,
         ]);
     }
 
@@ -44,10 +83,20 @@ class VetController extends Controller
         $pet = Pet::findOrFail($id);
         $visits = Visit::where('pet_id', $id)->get();
     
-        return view('vets.pdf', [
+        // resources/views/vets/pdf.blade.php を読み込む
+        $pdf = Pdf::loadView('vets.pdf', [
             'pet' => $pet,
             'visits' => $visits,
-        ]);
+        ])->set_option('compress', 1)
+        ->setPaper('a4', 'portrait'); // 縦A4サイズに指定
+
+        // ブラウザで表示する場合
+        // return $pdf->stream('vets.pdf');
+        
+        // 直接ダウンロードさせる場合
+        $fileName = '通院記録.pdf';
+        
+        return $pdf->download($fileName);   
     }
 
     public function logout()

@@ -97,7 +97,7 @@
             </div>
             <div class='d-flex justify-content-center mt-3'>
                 <button type='submit' class='btn btn-primary mr-3 px-4'>変更</button>
-                <button type='submit' form="delete-health-form" class='btn btn-danger px-4'
+                <button type='submit' form="delete-health-form-{{ $health->id }}" class='btn btn-danger px-4'
                         onclick="return confirm('体調記録を削除しますか')">削除</button>
             </div>
         </div>   
@@ -134,7 +134,7 @@
         }
     </style>
     <!-- 削除フォーム -->
-    <form id="delete-health-form"
+    <form id="delete-health-form-{{ $health->id }}"
         action="{{ route('destroy.health', ['id' => $health->id]) }}" method="post">
         @csrf
         @method('DELETE')

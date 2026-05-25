@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth'], function() {
 // 獣医師画面
 Route::middleware(['auth:vets'])->prefix('vet')->group(function () {
     Route::get('/dashboard', [VetController::class, 'dashboard'])->name('vet.dashboard');
+    Route::get('/search', [VetController::class, 'search'])->name('vet.search');
     Route::get('/show/{id}', [VetController::class, 'show'])->name('vet.show');
     Route::get('/index/{id}', [VetController::class, 'index'])->name('vet.index');
     Route::get('/pdf/{id}', [VetController::class, 'pdf'])->name('vet.pdf');
@@ -58,6 +59,7 @@ Route::middleware(['auth:vets'])->prefix('vet')->group(function () {
 // 管理者画面
 Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/search', [AdminController::class, 'search'])->name('admin.search');
     Route::get('/show/{id}', [AdminController::class, 'show'])->name('admin.show');
     Route::get('/index/{id}', [AdminController::class, 'index'])->name('admin.index');
 });

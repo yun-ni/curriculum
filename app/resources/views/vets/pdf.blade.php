@@ -3,55 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        body {
-            font-family: sans-serif;
+        /* 基本の文字 */
+                @font-face {
+            font-family: 'NotoSansJP';
+            font-style: normal;
+            font-weight: normal;
+            src: url('{{ storage_path("fonts/Noto_Sans_JP/static/NotoSansJP-Regular.ttf") }}') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'NotoSansJP';
+            font-style: normal;
+            font-weight: bold;
+            src: url('{{ storage_path("fonts/Noto_Sans_JP/static/NotoSansJP-Bold.ttf") }}') format('truetype');
+        }
+        /* 全てのHTML要素に適用 */
+        body, table, th, td {
+            font-family: 'NotoSansJP', sans-serif;
             font-size: 12px;
         }
-        .title {
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            border-top: 3px double #000;
-            border-bottom: 3px double #000;
-            padding: 10px 0;
+        body {
+            padding-top: 5mm;
+            width: 190mm;
+            height: 297mm;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 12px;
+        }
+        .header,
+        .footer {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .left,
+        .right {
+            width: 48%;
+            box-sizing: border-box;
+        }
+
+        .left {
+            float: left;
+        }
+
+        .right {
+            float: right;
+            text-align: right;
+        }
+
+        .clearfix:after {
+            content: "";
+            display: table;
+            clear: both;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
         }
 
-        th, td {
+        table,
+        th,
+        td {
             border: 1px solid #000;
-            padding: 6px;
-            vertical-align: top;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
         }
 
         th {
-            background-color: #eeeeee;
-            text-align: left;
-            font-weight: normal;
+            background-color: #f2f2f2;
         }
 
-        .date {
-            width: 13%;
-        }
-
-        .hospital {
-            width: 22%;
-        }
-
-        .content {
-            width: 32%;
-        }
-
-        .memo {
-            width: 33%;
-        }
-
-        .row-height {
-            height: 55px;
+        .total {
+            text-align: right;
+            margin-top: 10px;
         }
     </style>
 </head>

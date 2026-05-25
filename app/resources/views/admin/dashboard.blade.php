@@ -12,18 +12,19 @@
         <!-- 左側 -->
         <div class="col-5 bg-success-subtle">
             <p class="text-center">検索</p>
-            <form>
+            
+            <form action="{{ route('admin.search') }}" method="GET">
                 <label for="email" class="ml-2 mt-1 mb-0">メールアドレス</label>
-                <input type='email' class='form-control' name='email' value="{{ old('email') }}"/>
+                <input type='email' class='form-control' name='email' value="{{ request('email') }}"/>
 
                 <label for="name" class="ml-2 mt-1 mb-0">飼い主の名前</label>
-                <input type='text' class='form-control' name='name' value="{{ old('name') }}"/>
+                <input type='text' class='form-control' name='name' value="{{ request('name') }}"/>
 
                 <label for="name" class="ml-2 mt-1 mb-0">ペットの名前</label>
-                <input type='text' class='form-control' name='pet_name'value="{{ old('pet_name') }}"/>
+                <input type='text' class='form-control' name='pet_name'value="{{ request('pet_name') }}"/>
 
                 <label for="birth_date" class="ml-1 mt-2 mb-0">誕生日</label>
-                <input type='date' class='form-control' name='birth_date' id='birth_date' value="{{ old('birth_date') }}"/>
+                <input type='date' class='form-control' name='birth_date' id='birth_date' value="{{ request('birth_date') }}"/>
 
                 <div class='row justify-content-center'>
                     <button type='submit' class='btn btn-primary w-25 mt-2 mb-3'>検索</button>

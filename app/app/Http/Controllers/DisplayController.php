@@ -28,20 +28,19 @@ class DisplayController extends Controller
 
     public function petIndex(int $petId) {
         $pet = Pet::findOrFail($petId);
-    
         $healths = Health::where('pet_id', $petId)->get();
         $visits = Visit::where('pet_id', $petId)->get();
     
         $today = Carbon::today()->toDateString();
 
-        $healthExists = Health::where('pet_id', $petId)
-            ->where('health_date', $today)
-            ->exists();
-    
-        if (!$healthExists) {
+        $todayHealth = Health::where('pet_id', $petId)
+        ->whereDate('health_date', $today)
+        ->first();
+
+        if (is_null($todayHealth)) {
             return redirect()->route('create.health_form', ['id' => $petId]);
         }
-    
+
         return view('pets.index', compact('pet', 'healths', 'visits'));
     }
 }
