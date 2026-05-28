@@ -47,6 +47,9 @@
                         padding-left: 20%;
                         margin-bottom: 0;
                     }
+                    .receipt-area {
+                        width: 320px;
+                    }
                 </style> 
                 <div class="row">
                     <!-- 左側 -->
@@ -93,11 +96,26 @@
                             <input type="number" step="0" min="0" class='form-control' name="medical_fees" value="{{ old('medical_fees') }}"/>
                             <span style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); color: #666;">円</span>
                         </div>
+                        <!-- OCR専用form -->
+                        <div class="receipt-area">
+                            <label for="receipt">医療明細書を選択:</label>
+                            <input type="file" name="receipt" id="receipt" accept="image/*" required>
+                            <button type="submit" formaction="{{ route('visit.ocr.generate') }}"
+                                    formmethod="post"
+                                    formenctype="multipart/form-data">読み取る</button>
+                            {{-- 読み取り結果の表示エリア --}}
+                            @if(isset($amount))
+                                <div class="result-box">
+                                    <h3>読み取り結果</h3>
+                                    <p>合計金額: {{ number_format($amount) }} 円</p>
+                                </div>
+                            @endif
+                        </div>
                         <label for="memo" class="ml-2 mt-2 mb-0">メモ</label>
-                            <textarea class="form-control"
-                                style="height: 100px;"
-                                name="memo"
-                                id="memo">{{ old('memo') }}</textarea>
+                        <textarea class="form-control"
+                            style="height: 100px;"
+                            name="memo"
+                            id="memo">{{ old('memo') }}</textarea>
                     </div>
                 </div>
 

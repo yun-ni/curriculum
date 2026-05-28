@@ -8,7 +8,7 @@
 @endif
 <!-- フォーム -->
 <div class="container bg-secondary-subtle">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-2">
         <!-- 左側 -->
         <div class="col-5 bg-success-subtle">
             <p class="text-center">検索</p>
@@ -32,7 +32,7 @@
             </form>
         </div>
         <!-- 右側 -->
-        <div class="col-7 bg-danger-subtle">
+        <div class="col-7 bg-success-subtle">
             <p class="text-center">飼い主 一覧</p>
             <div class="card-body">
                 <table class="table table-hover text-center">

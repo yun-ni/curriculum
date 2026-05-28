@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\VetController;
 
+use App\Http\Controllers\OcrController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,6 +46,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/visits/visit_edit/{id}', [RegistrationController::class, 'editVisitForm'])->name('edit.visit_form');
     Route::put('/visits/visit_edit/{id}', [RegistrationController::class, 'editVisit'])->name('edit.visit');
     Route::delete('/visits/visit_edit/{id}', [RegistrationController::class, 'destroyVisit'])->name('destroy.visit');
+// OCR読み込み用
+    // OCR画面表示
+    Route::get('/visit/ocr', [OcrController::class, 'visitOcr'])->name('visit.ocr');
+    // OCR実行
+    Route::post('/visit/ocr', [OcrController::class, 'generate'])->name('visit.ocr.generate');
 });
 // Route::get('URLのパス', [コントローラークラス, 'メソッド名'])->name('ルート名');
 
