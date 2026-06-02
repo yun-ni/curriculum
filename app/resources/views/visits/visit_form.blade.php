@@ -91,25 +91,19 @@
                         <label for="prescription" class="ml-2 mt-2 mb-0">処方薬</label>
                         <input type="text" class="form-control" name="prescription"
                                 id="prescription" value="{{ old('prescription') }}"/>                
-                        <label for="weightmedical_fees" class="ml-2 mt-2 mb-0">医療費</label>
+                        <label for="medical_fees" class="ml-2 mt-2 mb-0">医療費</label>
                         <div style="position: relative;">
-                            <input type="number" step="0" min="0" class='form-control' name="medical_fees" value="{{ old('medical_fees') }}"/>
+                            <input type="number" step="0" min="0" class='form-control' name="medical_fees" 
+                                   value="{{ old('medical_fees', session('medical_fees') ?? $medical_fees ?? '') }}"/>
                             <span style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); color: #666;">円</span>
                         </div>
                         <!-- OCR専用form -->
                         <div class="receipt-area">
-                            <label for="receipt">医療明細書を選択:</label>
+                            <label for="receipt" class="ml-2 mt-2 mb-0">医療明細書から医療費を計算</label>
                             <input type="file" name="receipt" id="receipt" accept="image/*" required>
                             <button type="submit" formaction="{{ route('visit.ocr.generate') }}"
                                     formmethod="post"
                                     formenctype="multipart/form-data">読み取る</button>
-                            {{-- 読み取り結果の表示エリア --}}
-                            @if(isset($amount))
-                                <div class="result-box">
-                                    <h3>読み取り結果</h3>
-                                    <p>合計金額: {{ number_format($amount) }} 円</p>
-                                </div>
-                            @endif
                         </div>
                         <label for="memo" class="ml-2 mt-2 mb-0">メモ</label>
                         <textarea class="form-control"
