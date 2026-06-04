@@ -99,7 +99,7 @@
                         </div>
                         <!-- OCR専用form -->
                         <div class="receipt-area">
-                            <label for="receipt" class="ml-2 mt-2 mb-0">医療明細書から医療費を計算</label>
+                            <label for="receipt" class="ml-2 mt-2 mb-0">医療費を計算</label>
                             <input type="file" name="receipt" id="receipt" accept="image/*">
                             <button type="submit" formaction="{{ route('visit.ocr.generate', ['petId' => $id]) }}"
                                     formmethod="post"
