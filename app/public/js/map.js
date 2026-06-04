@@ -15,7 +15,7 @@ function initMap() {
 
   let marker = new google.maps.Marker({
     position: location,
-    map: map,
+    map: map, // プロパティ名 : 変数名
   });
 
   const geocoder = new google.maps.Geocoder();
@@ -33,6 +33,18 @@ function initMap() {
         }
     });
   });
+
+  // OCR後で明細書読み込み後、病院名が入力されている場合、地図も再表示
+  const firstHospitalName = document.getElementById("hospital_name").value;
+
+  if (firstHospitalName) {
+    geocoder.geocode({ address: firstHospitalName }, function (results, status) {
+      if (status === "OK") {
+        map.setCenter(results[0].geometry.location);
+        marker.setPosition(results[0].geometry.location);
+      }
+    });
+  }
 }
 
 function editMap(visitId) {

@@ -3,7 +3,7 @@
     <div style="height: calc(97.2vh - 56px);" class="d-flex align-items-center justify-content-center">
         <div class="border bg-light d-flex flex-column align-items-center justify-content-center"
              style="width: 70%; height: 99%;">
-            <form action="{{ route('create.visit', ['id' => $id]) }}" method="post">
+            <form action="{{ route('create.visit', ['id' => $id]) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <h2 class="p-2  mt-3 align-items-center font-semibold text-center text-gray-800 leading-tight">
                     {{ __('通院記録') }}
@@ -94,14 +94,14 @@
                         <label for="medical_fees" class="ml-2 mt-2 mb-0">医療費</label>
                         <div style="position: relative;">
                             <input type="number" step="0" min="0" class='form-control' name="medical_fees" 
-                                   value="{{ old('medical_fees', session('medical_fees') ?? $medical_fees ?? '') }}"/>
+                                   value="{{ session('medical_fees') ?? old('medical_fees') }}"/>
                             <span style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); color: #666;">円</span>
                         </div>
                         <!-- OCR専用form -->
                         <div class="receipt-area">
                             <label for="receipt" class="ml-2 mt-2 mb-0">医療明細書から医療費を計算</label>
-                            <input type="file" name="receipt" id="receipt" accept="image/*" required>
-                            <button type="submit" formaction="{{ route('visit.ocr.generate') }}"
+                            <input type="file" name="receipt" id="receipt" accept="image/*">
+                            <button type="submit" formaction="{{ route('visit.ocr.generate', ['petId' => $id]) }}"
                                     formmethod="post"
                                     formenctype="multipart/form-data">読み取る</button>
                         </div>

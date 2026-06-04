@@ -48,9 +48,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::delete('/visits/visit_edit/{id}', [RegistrationController::class, 'destroyVisit'])->name('destroy.visit');
 // OCR読み込み用
     // OCR画面表示
-    Route::get('/visit/ocr', [OcrController::class, 'visitOcr'])->name('visit.ocr');
+    Route::post('/visit/ocr/{petId}', [OcrController::class, 'visitOcr'])->name('visit.ocr');
     // OCR実行
-    Route::post('/visit/ocr', [OcrController::class, 'generate'])->name('visit.ocr.generate');
+    Route::post('/visit/ocr/generate/{petId}', [OcrController::class, 'generate'])->name('visit.ocr.generate');
 });
 // Route::get('URLのパス', [コントローラークラス, 'メソッド名'])->name('ルート名');
 
