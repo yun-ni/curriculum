@@ -34,7 +34,7 @@ class OcrController extends Controller
         if (is_null($receipt)) {
             return back()->withInput();
         }
-        
+
         // Base64文字列へ変換
         $base64Image = base64_encode(file_get_contents($receipt->getPathname()));
         // 画像の種類を取得
@@ -44,6 +44,18 @@ class OcrController extends Controller
         $apiKey = env('GEMINI_API_KEY');
         $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={$apiKey}";
     
+
+        // プロンプトの条件
+        $prompt = "以下のサービスに該当すると判断できる金額は医療費に含めないでください。
+                  データ：
+                  - カット
+                  - カットコース
+                  - トリミング
+                  - 部分カット
+                  - 毛玉
+                  - デンタル
+                  - シャンプー";
+        
         // APIリクエストの送信
         $response = Http::timeout(60)
         ->withHeaders([
@@ -52,7 +64,8 @@ class OcrController extends Controller
             'contents' => [
                 [
                     'parts' => [
-                        ['text' => '領収書画像から税込み合計金額のみを数字で返してください。説明文は不要です。例: 7601'],
+                        // 「$prompt.\n」で変数を結合
+                        ['text' => $prompt.  "\n領収書画像から上記データに該当する金額を除いた税込み合計金額のみを数字で返してください。説明文は不要です。例: 7601"],
                         [
                                 'inlineData' => [
                                 'mimeType' => $mimeType,
@@ -66,17 +79,18 @@ class OcrController extends Controller
     
         // 結果の取得
         $resultData = $response->json();
-        // dd($resultData['candidates'][0]['content']['parts']);
+    
+        if (!isset($resultData['candidates'])) {
+            return back()
+                ->withInput()
+                ->with('error', 'OCRの読み取りに失敗しました。');
+        }
         
         $totalFees = $resultData['candidates'][0]['content']['parts'][0]['text'];
     
         return back()
             ->withInput()
             ->with('medical_fees', $totalFees);
-        // return view('visits.visit_form', [
-        //     'medical_fees' => $totalFees,
-        //     'id' => $visit->pet_id
-        // ]);
     }
     
 }
