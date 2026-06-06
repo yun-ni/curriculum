@@ -102,6 +102,7 @@
                             <label for="receipt" class="ml-2 mt-2 mb-0">医療費を計算</label>
                             <input type="file" name="receipt" id="receipt" accept="image/*">
                             <button type="submit" formaction="{{ route('visit.ocr.generate', ['petId' => $id]) }}"
+                                    id="my-button" onclick="startLoading()"
                                     formmethod="post"
                                     formenctype="multipart/form-data">読み取る</button>
                         </div>
@@ -119,4 +120,32 @@
             </form>
         </div>
     </div>
+
+<!-- 制御用スクリプト -->
+<script>
+function startLoading() {
+  const btn = document.getElementById('my-button');
+  
+  // 読み込み中状態に変更
+  //btn.disabled = true;
+  btn.innerHTML = `
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    読み込み中...
+  `;
+
+  // --- ここで非同期処理（fetchやAjaxなど）を実行 ---
+  setTimeout(() => {
+    stopLoading(); // 処理が終わったら元に戻す
+  }, 3000); // 3秒後に解除する例
+}
+
+function stopLoading() {
+  const btn = document.getElementById('my-button');
+  
+  // 元の状態に戻す
+  btn.disabled = false;
+  btn.innerHTML = '読み取る';
+}
+</script>
+
 @endsection
