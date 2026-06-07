@@ -109,8 +109,9 @@ return [
 
         /**
          * Whether to enable font subsetting or not.
+         * False=>Trueへ変更し、軽量化された
          */
-        'enable_font_subsetting' => false,
+        'enable_font_subsetting' => true,
 
         /**
          * The PDF rendering backend to use

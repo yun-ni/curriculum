@@ -82,13 +82,18 @@ class VetController extends Controller
     {
         $pet = Pet::findOrFail($id);
         $visits = Visit::where('pet_id', $id)->get();
-    
+
         // resources/views/vets/pdf.blade.php を読み込む
         $pdf = Pdf::loadView('vets.pdf', [
             'pet' => $pet,
             'visits' => $visits,
         ])->set_option('compress', 1)
         ->setPaper('a4', 'portrait'); // 縦A4サイズに指定
+
+        // PDFライブラリの圧縮設定を有効化
+        $pdf->setOption('is_font_subseting_enabled', true); // フォントサブセット化で軽量化
+        $pdf->setOption('dpi', 150); // 解像度を下げて容量削減
+
 
         // ブラウザで表示する場合
         // return $pdf->stream('vets.pdf');

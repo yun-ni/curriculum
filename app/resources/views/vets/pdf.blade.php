@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <style>
         /* 基本の文字 */
-                @font-face {
+        @font-face {
             font-family: 'NotoSansJP';
             font-style: normal;
             font-weight: normal;
@@ -86,7 +86,6 @@
     </style>
 </head>
 <body>
-
     <div class="title">
         通院記録
     </div>
@@ -119,6 +118,5 @@
             @endforeach
         </tbody>
     </table>
-
 </body>
 </html>
