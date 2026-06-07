@@ -60,7 +60,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-5 pr-1">                   
+            <div class="col-12 col-sm-5">                   
                 <div class="card">
                     <!-- bg-light：薄い色 -->
                     <div class="card-body bg-light">
@@ -68,58 +68,60 @@
                         <div class=" text-left">
                             <a href="{{ route('create.health_form', ['id' => $pet->id]) }}">+体調を記録</a>
                         </div>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope='col'>詳細</th>
-                                    <th scope='col'>日付</th>
-                                    <th scope='col'>元気</th>
-                                    <th scope='col'>お散歩</th>
-                                    <th scope='col'>体重</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {{-- 84行目の {!! ... !!}: 文字列としてHTML要素（<i>タグ）を出力する --}}
-                                @foreach ($healths as $health)
-                                <tr>
-                                    <td scope='col'>
-                                        <!-- モーダルボタン -->
-                                        <a href="#"
-                                           data-toggle="modal"
-                                           data-target="#healthEditModal{{ $health->id }}">
-                                            <i class="bi bi-clipboard-check"></i>
-                                        </a>
-                                    </td>
-                                    <td scope='col'>{{ $health['health_date'] }}</td>
-                                    <td scope='col'>
-                                        @if($health['energy'] === 2)
-                                            <i class="bi bi-emoji-laughing"></i>
-                                        @elseif($health['energy'] === 1)
-                                            <i class="bi bi-emoji-smile"></i>
-                                        @elseif($health['energy'] === 0)
-                                            <i class="bi bi-emoji-frown"></i>
-                                        @else
-                                            <i class="bi bi-emoji-dizzy"></i>
-                                        @endif
-                                    </td>
-                                    <td scope='col'>{{ $health['walk_minutes'] }}</td>
-                                    <td scope='col'>{{ $health['weight'] }}</td>
-                                </tr>
-                                <!-- モーダルの外枠 -->
-                                <div class="modal fade" id="healthEditModal{{ $health->id }}" tabindex="-1">
-                                    <div class="modal-dialog">                                          
-                                        <!-- ここで別ファイルを読み込む -->
-                                        @include('healths.health_edit')
+                        <!-- 横にスクロール -->
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope='col'>詳細</th>
+                                        <th scope='col'>日付</th>
+                                        <th scope='col'>元気</th>
+                                        <th scope='col'>お散歩</th>
+                                        <th scope='col'>体重</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {{-- 84行目の {!! ... !!}: 文字列としてHTML要素（<i>タグ）を出力する --}}
+                                    @foreach ($healths as $health)
+                                    <tr>
+                                        <td scope='col'>
+                                            <!-- モーダルボタン -->
+                                            <a href="#"
+                                            data-toggle="modal"
+                                            data-target="#healthEditModal{{ $health->id }}">
+                                                <i class="bi bi-clipboard-check"></i>
+                                            </a>
+                                        </td>
+                                        <td scope='col'>{{ $health['health_date'] }}</td>
+                                        <td scope='col'>
+                                            @if($health['energy'] === 2)
+                                                <i class="bi bi-emoji-laughing"></i>
+                                            @elseif($health['energy'] === 1)
+                                                <i class="bi bi-emoji-smile"></i>
+                                            @elseif($health['energy'] === 0)
+                                                <i class="bi bi-emoji-frown"></i>
+                                            @else
+                                                <i class="bi bi-emoji-dizzy"></i>
+                                            @endif
+                                        </td>
+                                        <td scope='col'>{{ $health['walk_minutes'] }}</td>
+                                        <td scope='col'>{{ $health['weight'] }}</td>
+                                    </tr>
+                                    <!-- モーダルの外枠 -->
+                                    <div class="modal fade" id="healthEditModal{{ $health->id }}" tabindex="-1">
+                                        <div class="modal-dialog">                                          
+                                            <!-- ここで別ファイルを読み込む -->
+                                            @include('healths.health_edit')
+                                        </div>
                                     </div>
-                                </div>
-                                @endforeach
-                            </tbody>
-                        </table>
-
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-7 pl-1">                   
+            <div class="col-12 col-sm-7">                   
                 <div class="card">
                     <!-- bg-light：薄い色 -->
                     <div class="card-body bg-light">
