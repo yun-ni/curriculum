@@ -1,5 +1,10 @@
 @extends('layouts.layout') <!-- 使用するテンプレートの宣言/('一つ上のディレクトリ.｢.blade.phpの前のファイル名｣') -->
 @section('content')
+    <!-- ローディング画面 -->
+    <div id="loading">
+        <img class="spinner" src="{{ asset('images/loading.png') }}" alt="">
+    </div>
+
     <div style="height: calc(97.2vh - 56px);" class="d-flex align-items-center justify-content-center">
         <div class="border bg-light d-flex flex-column align-items-center justify-content-center"
              style="width: 70%; height: 99%;">
@@ -49,6 +54,29 @@
                     }
                     .receipt-area {
                         width: 320px;
+                    }
+                    /* ローディング画面 */
+                    #loading {
+                        transition: all 1s;
+                        background-color: rgba(93, 93, 93, 0.7);
+                        position: fixed;
+                        inset: 0;
+                        z-index: 9999;
+                        display: grid;
+                        place-items: center;
+
+                        /* 最初は非表示 */
+                        opacity: 0;
+                        visibility: hidden;
+                    }
+                    /* OCR開始時に表示 */
+                    #loading.loading-active {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+                    .spinner {
+                        width: 200px;
+                        height: 200px;
                     }
                 </style> 
                 <div class="row">
@@ -124,27 +152,14 @@
 <!-- 制御用スクリプト -->
 <script>
 function startLoading() {
-  const btn = document.getElementById('my-button');
-  
-  // 読み込み中状態に変更
-  //btn.disabled = true;
-  btn.innerHTML = `
-    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    読み込み中...
-  `;
+    const btn = document.getElementById('my-button');
+    // 画面全体にローディング画像を表示
+    loading.classList.add('loading-active');
 
-//   // --- ここで非同期処理（fetchやAjaxなど）を実行 ---
-//   setTimeout(() => {
-//     stopLoading(); // 処理が終わったら元に戻す
-//   }, 3000); // 3秒後に解除する例
-// }
-
-// function stopLoading() {
-//   const btn = document.getElementById('my-button');
-  
-//   // 元の状態に戻す
-//   btn.disabled = false;
-//   btn.innerHTML = '読み取る';
+    // 読み込み中状態に変更
+    btn.innerHTML = `
+        読み込み中...
+    `;
 }
 </script>
 
