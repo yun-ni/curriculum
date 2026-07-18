@@ -17,7 +17,7 @@ class OcrController extends Controller
         $visit->pet_id = $petId;
         
         return view('visits.visit_form', [
-            'medical_fees' => $totalFees,
+            // 'medical_fees' => $totalFees,
             'id' => $visit->pet_id
         ]);
     }

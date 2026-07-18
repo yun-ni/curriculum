@@ -133,18 +133,18 @@ function startLoading() {
     読み込み中...
   `;
 
-  // --- ここで非同期処理（fetchやAjaxなど）を実行 ---
-  setTimeout(() => {
-    stopLoading(); // 処理が終わったら元に戻す
-  }, 3000); // 3秒後に解除する例
-}
+//   // --- ここで非同期処理（fetchやAjaxなど）を実行 ---
+//   setTimeout(() => {
+//     stopLoading(); // 処理が終わったら元に戻す
+//   }, 3000); // 3秒後に解除する例
+// }
 
-function stopLoading() {
-  const btn = document.getElementById('my-button');
+// function stopLoading() {
+//   const btn = document.getElementById('my-button');
   
-  // 元の状態に戻す
-  btn.disabled = false;
-  btn.innerHTML = '読み取る';
+//   // 元の状態に戻す
+//   btn.disabled = false;
+//   btn.innerHTML = '読み取る';
 }
 </script>
 

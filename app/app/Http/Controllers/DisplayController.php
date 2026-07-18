@@ -30,8 +30,8 @@ class DisplayController extends Controller
 
     public function petIndex(Request $request, int $petId) {
         $pet = Pet::findOrFail($petId);
-        $healths = Health::where('pet_id', $petId)->get();
-        $visits = Visit::where('pet_id', $petId)->get();
+        $all_healths = Health::where('pet_id', $petId)->get();
+        $all_visits = Visit::where('pet_id', $petId)->get();
     
         $today = Carbon::today()->toDateString();
 
@@ -45,16 +45,16 @@ class DisplayController extends Controller
 
         // 非同期処理 記録を無限スクロール
         // レコードを10件ずつ取得
-        $health_records = Health::where('pet_id', $petId)->latest()->paginate(10);
-        $visit_records = Visit::where('pet_id', $petId)->latest()->paginate(10);
+        $healths = Health::where('pet_id', $petId)->latest()->paginate(10);
+        $visits = Visit::where('pet_id', $petId)->latest()->paginate(10);
 
         // Ajax通信の場合はJSONを返す
         if ($request->ajax()) {
             return response()->json([
-                'health_html' => view('pets.health_list', compact('health_records'))->render(),
-                'visit_html' => view('pets.visit_list', compact('visit_records'))->render(),
-                'healthHasMorePages' => $health_records->hasMorePages(),
-                'visitHasMorePages' => $visit_records->hasMorePages(),
+                'health_html' => view('pets.health_list', compact('healths'))->render(),
+                'visit_html' => view('pets.visit_list', compact('visits'))->render(),
+                'healthHasMorePages' => $healths->hasMorePages(),
+                'visitHasMorePages' => $visits->hasMorePages(),
             ]);
         }
 
