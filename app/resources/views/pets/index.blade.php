@@ -60,7 +60,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-sm-5">                   
+            <div class="col-12 col-lg-5">                   
                 <div class="card">
                     <!-- bg-light：薄い色 -->
                     <div class="card-body bg-light">
@@ -121,7 +121,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-7">                   
+            <div class="col-12 col-lg-7">                   
                 <div class="card">
                     <!-- bg-light：薄い色 -->
                     <div class="card-body bg-light">
